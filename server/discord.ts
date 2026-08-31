@@ -25,7 +25,7 @@ type Field = { name: string; value: string; inline?: boolean }
 
 /** Wraps a value so its content cannot be read as markup. Backticks inside the
  *  value are stripped rather than escaped, because a code span has no escape. */
-function code(value: string): string {
+export function code(value: string): string {
   return `\`${value.replace(/`/g, "'")}\``
 }
 

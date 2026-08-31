@@ -122,14 +122,23 @@ thing on every push to `main`, gated on `bun run build`, so a failing test or a
 type error stops the deploy rather than shipping. Pull requests run the identical
 gate and skip the upload.
 
-Three settings on the GitHub repo, under Settings → Secrets and variables → Actions:
+Four settings on the GitHub repo, under Settings → Secrets and variables → Actions:
 
 | Name | Kind | Notes |
 | --- | --- | --- |
 | `CLOUDFLARE_API_TOKEN` | secret | Token with the **Cloudflare Pages: Edit** permission |
 | `CLOUDFLARE_ACCOUNT_ID` | secret | The account the Pages project lives in |
 | `SITE_URL` | variable | Origin to build canonical tags from; omit and they are omitted |
+| `DISCORD_DEPLOY_WEBHOOK_URL` | secret | Where the deploy notice goes; omit and the run says so and moves on |
 
-`DISCORD_WEBHOOK_URL` is deliberately absent from that list. It is a runtime
-binding the deployed Function reads, not a build input, so it is set once on the
-project with `wrangler pages secret put` and never travels through CI.
+The deploy notice is announced whatever the outcome, because a deploy you are
+not told about failing is worse than no notice at all. `server/deploy.ts` renders
+it and is tested like every other module under `server/`; `scripts/notify-deploy.ts`
+only marshals the workflow environment into it.
+
+That webhook is deliberately a separate secret from the one the site itself
+uses. Point it at the same channel if you want them together, but they are two
+different things: one says a stranger is reading your CV right now, the other
+says main is live. The visitor webhook is a runtime binding the deployed
+Function reads, not a build input, so it is set once on the project with
+`wrangler pages secret put` and never travels through CI.

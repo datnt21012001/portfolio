@@ -47,9 +47,36 @@ jobs:
       # ref_name is main for a push to main, which Cloudflare maps to the
       # production environment. A manual dispatch from any other branch lands
       # as a preview instead, which is what you want from a one-off run.
+      #
+      # pipefail matters: without it `tee` returns 0 and a failed upload would
+      # be read as a success. The branch goes through the environment rather
+      # than ${{ }} so that a branch name cannot become shell.
       - name: Deploy to Cloudflare Pages
+        id: deploy
         if: github.event_name != 'pull_request'
-        run: bunx wrangler pages deploy dist --project-name=portfolio-datnt --branch=${{ github.ref_name }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -o pipefail
+          bunx wrangler pages deploy dist \
+            --project-name=portfolio-datnt \
+            --branch="$GITHUB_REF_NAME" | tee "$RUNNER_TEMP/deploy.log"
+          url=$(grep -oE 'https://[a-z0-9.-]+\.pages\.dev' "$RUNNER_TEMP/deploy.log" | tail -1)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      # always(), so a failed gate is announced too - a deploy you are not told
+      # about failing is worse than no notice at all. The step reads job.status
+      # rather than assuming success, and skips quietly when the secret is
+      # absent. The commit subject is passed as an environment variable and
+      # never interpolated into the script: a subject is attacker-controlled on
+      # any repo that takes contributions.
+      - name: Announce on Discord
+        if: always() && github.event_name != 'pull_request'
+        env:
+          DISCORD_DEPLOY_WEBHOOK_URL: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
+          DEPLOY_STATUS: ${{ job.status }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          export COMMIT_SUBJECT="$(git log -1 --pretty=%s 2>/dev/null || true)"
+          bun scripts/notify-deploy.ts
