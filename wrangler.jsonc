@@ -1,0 +1,8 @@
+{
+  // Pinning this is the point of the file. Without it Cloudflare picks a default
+  // that moves forward over time, so a deploy months from now could land on
+  // different runtime behaviour with no change to the code.
+  "name": "ntd-portfolio",
+  "compatibility_date": "2026-08-29",
+  "pages_build_output_dir": "dist"
+}

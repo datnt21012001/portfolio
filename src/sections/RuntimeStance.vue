@@ -1,0 +1,39 @@
+<script setup lang="ts">
+import { runtimes } from '../data/profile'
+</script>
+
+<template>
+  <!-- Sits on paper like the impact grid above it, so the rule is what separates
+       them. The argument here only works once those four numbers have been read. -->
+  <section id="runtimes" class="border-t border-line">
+    <div class="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 sm:py-28">
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <div class="lg:col-span-4">
+          <div class="lg:sticky lg:top-28">
+            <h2
+              v-reveal="0"
+              class="max-w-[16ch] text-[1.9rem] leading-tight font-medium tracking-[-0.025em] text-ink sm:text-[2.4rem]"
+            >
+              {{ runtimes.headline }}
+            </h2>
+            <p v-reveal="1" class="mt-4 max-w-[42ch] text-[15px] leading-relaxed text-soft">
+              {{ runtimes.intro }}
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-8">
+          <div
+            v-for="(item, i) in runtimes.points"
+            :key="item.title"
+            v-reveal="i"
+            class="border-t border-line py-8 first:border-t-0 first:pt-0 lg:py-9"
+          >
+            <h3 class="text-[1.15rem] font-medium text-ink">{{ item.title }}</h3>
+            <p class="mt-3 max-w-[66ch] text-[15px] leading-relaxed text-soft">{{ item.body }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chỗ CV sẽ bị đào</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+<style>
+/* ---------------------------------------------------------------------------
+   Palette, type and radius are the portfolio's own "Slate + Ember" system,
+   reused verbatim so this page and the site read as one hand. The ember accent
+   is spent on exactly one thing here: marking where the CV is exposed.
+--------------------------------------------------------------------------- */
+:root {
+  --paper: #f4f3f1;
+  --surface: #fbfaf9;
+  --ink: #16161a;
+  --soft: #55555e;
+  --faint: #6e6d76;
+  --line: #dedcd8;
+  --line-strong: #c7c4be;
+  --accent: #b8452b;
+  --accent-wash: #b8452b14;
+  --on-accent: #fffdfc;
+  --panel: #16161a;
+  --on-panel: #edece9;
+  --on-panel-soft: #9a999f;
+  --radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111114;
+    --surface: #17171b;
+    --ink: #eceae7;
+    --soft: #a5a4a0;
+    --faint: #8b8a93;
+    --line: #2a2a30;
+    --line-strong: #3c3b43;
+    --accent: #e0714b;
+    --accent-wash: #e0714b1a;
+    --on-accent: #16100d;
+    --panel: #1e1e23;
+    --on-panel: #eceae7;
+    --on-panel-soft: #a5a4a0;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #111114;
+  --surface: #17171b;
+  --ink: #eceae7;
+  --soft: #a5a4a0;
+  --faint: #8b8a93;
+  --line: #2a2a30;
+  --line-strong: #3c3b43;
+  --accent: #e0714b;
+  --accent-wash: #e0714b1a;
+  --on-accent: #16100d;
+  --panel: #1e1e23;
+  --on-panel: #eceae7;
+  --on-panel-soft: #a5a4a0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  font-feature-settings: "cv11";
+}
+
+.mono {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* --- Sticky bar -------------------------------------------------------- */
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 24px;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.bar-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-right: auto;
+}
+
+.bar-name span { color: var(--faint); font-weight: 400; }
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  color: var(--soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  width: 96px;
+  height: 3px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.btn {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  color: var(--soft);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.btn:hover { color: var(--ink); border-color: var(--ink); }
+.btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn:focus-visible, input:focus-visible + .box { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* --- Page frame -------------------------------------------------------- */
+
+.wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+h1 {
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  font-weight: 600;
+  margin: 0 0 20px;
+  text-wrap: balance;
+}
+
+.lede { font-size: 17px; color: var(--soft); margin: 0 0 16px; max-width: 62ch; }
+.lede strong { color: var(--ink); font-weight: 600; }
+
+.eyebrow {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 0 0 10px;
+}
+
+/* --- The reading of the CV --------------------------------------------- */
+
+.read {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 36px 0 8px;
+  overflow: hidden;
+}
+
+.read-row { background: var(--surface); padding: 18px 20px; }
+
+.read-row h3 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  letter-spacing: 0.01em;
+}
+
+.read-row p { margin: 0; font-size: 15px; color: var(--soft); }
+.read-row p + p { margin-top: 8px; }
+.read-row strong { color: var(--ink); font-weight: 500; }
+
+.read-row.is-risk { background: var(--accent-wash); }
+.read-row.is-risk h3 { color: var(--accent); }
+
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 24px 0 40px;
+  overflow: hidden;
+}
+
+.num { background: var(--surface); padding: 14px 16px; }
+
+.num b {
+  display: block;
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.num span { display: block; font-size: 12px; color: var(--faint); margin-top: 3px; }
+
+/* --- Sections ---------------------------------------------------------- */
+
+section { margin-top: 52px; scroll-margin-top: 72px; }
+
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-strong);
+  margin-bottom: 4px;
+}
+
+.sec-letter {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.sec-head h2 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  flex: 1;
+  text-wrap: balance;
+}
+
+.sec-count {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sec-note {
+  font-size: 14px;
+  color: var(--faint);
+  margin: 14px 0 4px;
+  max-width: 64ch;
+}
+
+ol.qs { list-style: none; margin: 0; padding: 0; }
+
+.q {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 0 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.q:last-child { border-bottom: 0; }
+
+/* Checkbox is a real input kept visually hidden so the label, keyboard and
+   screen readers all behave; .box is what is actually painted. */
+.q input {
+  position: absolute;
+  opacity: 0;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.q-check {
+  grid-row: 1 / span 2;
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+}
+
+.box {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.q input:checked + .box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.q input:checked + .box::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 9px;
+  border: solid var(--on-accent);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(42deg);
+}
+
+.q-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.q-id {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.04em;
+}
+
+.tag {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-strong);
+  color: var(--faint);
+}
+
+.tag-risk { color: var(--accent); border-color: var(--accent); }
+.tag-en { color: var(--soft); }
+
+.q-text {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 60ch;
+}
+
+.q-why {
+  margin: 7px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--faint);
+  max-width: 62ch;
+}
+
+.q-why b {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--soft);
+  margin-right: 6px;
+}
+
+.q.done .q-text, .q.done .q-why { color: var(--faint); }
+.q.done .q-text { text-decoration: line-through; text-decoration-color: var(--line-strong); }
+
+body.only-open .q.done { display: none; }
+
+code {
+  font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.5px 4px;
+}
+
+.foot {
+  margin-top: 64px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--faint);
+  max-width: 62ch;
+}
+
+@media (max-width: 600px) {
+  .wrap { padding: 36px 18px 72px; }
+  .bar { padding: 10px 18px; }
+  .bar-name span { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+@media print {
+  .bar { display: none; }
+  body { background: #fff; color: #000; }
+  .q { break-inside: avoid; }
+  .wrap { max-width: none; padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-name mono">Chỗ CV sẽ bị đào <span>· Nguyen Thanh Dat</span></div>
+  <div class="progress">
+    <span id="count">0 / 0</span>
+    <span class="track"><span class="fill" id="fill"></span></span>
+  </div>
+  <button class="btn" id="filter" type="button" aria-pressed="false">Chỉ hiện chưa xong</button>
+  <button class="btn" id="reset" type="button">Xoá đánh dấu</button>
+</div>
+
+<div class="wrap">
+
+  <p class="eyebrow">Ôn trước phỏng vấn NestJS · đọc từ CV ngày 30/08/2026</p>
+  <h1>Bốn con số mạnh nhất của anh đều là chiến thắng database.</h1>
+
+  <p class="lede">
+    CV này thuyết phục. Gần 5 năm, đi từ Fresher lên sở hữu trọn một service ERP,
+    khách Nhật liên tục, và bốn kết quả tối ưu có số đo thật chứ không phải tính từ.
+    Rất ít CV mid-level ở Việt Nam có phần "impact" đo được như vậy.
+  </p>
+  <p class="lede">
+    Nhưng đúng cái phần mạnh nhất đó lại là chỗ hở lớn nhất khi anh ứng tuyển vị trí
+    <strong>NestJS</strong>. Cả bốn kết quả — 26s→250ms, 9s→80ms, 18.2s→64ms, và tách
+    batch container — <strong>không cái nào cần tới kiến thức Node</strong>. Chúng là
+    index, query plan, thiết kế bảng, và giới hạn tài nguyên Docker. Anh sẽ làm được y
+    hệt bằng Laravel, Django hay Spring. Người phỏng vấn giỏi sẽ nhận ra trong 30 giây.
+  </p>
+
+  <div class="numbers">
+    <div class="num"><b>4 / 4</b><span>kết quả là DB &amp; infra</span></div>
+    <div class="num"><b>1 yr</b><span>NestJS khai trên CV</span></div>
+    <div class="num"><b>5 yrs</b><span>PHP / Laravel</span></div>
+    <div class="num"><b>0</b><span>GitHub công khai</span></div>
+  </div>
+
+  <div class="read">
+    <div class="read-row">
+      <h3>Anh là kiểu kỹ sư nào, theo CV</h3>
+      <p>
+        Một người <strong>tự đào tới gốc</strong> rồi mới sửa. Xuyên suốt CV không có câu nào
+        kiểu "tối ưu hiệu năng" chung chung — chỗ nào cũng là số trước, số sau, và nguyên nhân.
+        Vụ <code>docker stats</code> phát hiện batch job giành CPU với app server trên một
+        codebase kế thừa không có monitoring là câu chuyện đắt nhất trong CV: nó cho thấy anh
+        điều tra khi <em>chưa ai bảo có bug</em>.
+      </p>
+      <p>
+        Anh cũng là người <strong>sửa quy trình chứ không chỉ sửa code</strong> — đổi Git flow
+        ở Sotatek, checklist review, AI-assisted PR review. Ở mức mid-level đây là tín hiệu
+        senior thật.
+      </p>
+    </div>
+    <div class="read-row">
+      <h3>Hình dạng kinh nghiệm</h3>
+      <p>
+        Laravel là nửa dài (5 năm), NestJS là nửa mỏng (1 năm) — nhưng toàn bộ thành tích đo
+        được nằm ở nửa mỏng. Đây là lập luận đúng và trung thực, portfolio của anh cũng đã nói
+        thẳng ra thay vì né. Giữ nguyên cách đó.
+      </p>
+    </div>
+    <div class="read-row is-risk">
+      <h3>Ba chỗ một người đọc kỹ sẽ dừng lại</h3>
+      <p>
+        <strong>Vue.js (3 yrs).</strong> Theo chính CV: Flydino ~10 tháng + Bear Acer ~12 tháng
+        ≈ 22 tháng. Kozocom và Sotatek không có Vue trong tech stack. Con số 3 không cộng ra được
+        từ chính trang giấy đó.
+      </p>
+      <p>
+        <strong>PostgreSQL (3 yrs).</strong> Kozocom 13 tháng + Bear Acer 12 tháng, mà ở Bear Acer
+        Postgres chỉ dùng cho 6 entity Sync. Anh đã được cảnh báo và vẫn chọn 3 — vậy thì phải có
+        câu trả lời sẵn, đừng để bị hỏi bất ngờ.
+      </p>
+      <p>
+        <strong>Sotatek 5 tháng.</strong> Đủ ngắn để bị hỏi, và nó nằm ngay trước công việc hiện tại.
+      </p>
+    </div>
+  </div>
+
+  <p class="sec-note">
+    47 câu dưới đây xếp theo mức độ có khả năng bị hỏi. Tick để đánh dấu câu anh đã có
+    câu trả lời nói ra miệng được trong 60 giây — không phải câu anh "biết rồi".
+    Tiến độ lưu ngay trong trình duyệt này.
+  </p>
+
+  <section id="a">
+    <div class="sec-head">
+      <span class="sec-letter mono">A</span>
+      <h2>Lỗ hổng trung tâm: Node ở đâu trong thành tích của anh?</h2>
+      <span class="sec-count mono">6 câu</span>
+    </div>
+    <p class="sec-note">
+      Nếu chỉ chuẩn bị được một mục, chuẩn bị mục này. Đây là nơi buổi phỏng vấn NestJS
+      sẽ được quyết định.
+    </p>
+    <ol class="qs">
+      <li class="q" data-id="a1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">A1</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">Bốn kết quả trong CV đều là tối ưu database. Vậy anh đã giải quyết vấn đề nào mà <em>bắt buộc</em> phải hiểu Node/NestJS mới làm được?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Họ muốn biết anh là "kỹ sư database dùng NestJS" hay "kỹ sư NestJS". Nếu không có ví dụ nào, hãy nói thẳng rồi lái sang vụ self-throttling — đó là chỗ duy nhất anh chạm vào runtime Node.</p>
+        </div>
+      </li>
+      <li class="q" data-id="a2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">A2</span></div>
+        <div>
+          <p class="q-text">Logic self-throttling của worker container hoạt động chính xác thế nào? Anh đọc CPU usage bằng gì, ngưỡng bao nhiêu, và khi vượt ngưỡng thì code làm gì?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Đây là câu chuyện Node thật duy nhất trong CV nên chắc chắn bị đào sâu. Phải nói được: <code>process.cpuUsage()</code> hay <code>os.loadavg()</code>, đo theo chu kỳ nào, và throttle bằng cách delay job hay giảm concurrency.</p>
+        </div>
+      </li>
+      <li class="q" data-id="a3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">A3</span></div>
+        <div>
+          <p class="q-text">Tại sao tách batch ra container riêng lại đúng hơn là chạy chúng trong <code>worker_threads</code> hoặc <code>cluster</code> của cùng process?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Câu này biến điểm yếu thành điểm mạnh: anh có biết các lựa chọn Node bản địa và cố ý không chọn chúng không? Lý do tốt: giới hạn tài nguyên ở mức OS, crash không kéo theo app server, deploy độc lập.</p>
+        </div>
+      </li>
+      <li class="q" data-id="a4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">A4</span></div>
+        <div>
+          <p class="q-text">Bảng report tính sẵn theo tháng được cập nhật khi nào? Nếu dữ liệu nguồn sửa lùi ngày thì bảng đó sai — anh xử lý thế nào?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Mọi giải pháp pre-computed đều đánh đổi độ tươi lấy tốc độ. Họ muốn nghe anh <em>biết mình đã đánh đổi cái gì</em>, không phải nghe 26s→250ms lần nữa.</p>
+        </div>
+      </li>
+      <li class="q" data-id="a5">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">A5</span></div>
+        <div>
+          <p class="q-text">"Composite index sai thứ tự cột" — sai thế nào, và anh chứng minh bằng gì trước và sau khi sửa?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Phải nói được leftmost prefix rule và đọc được <code>EXPLAIN</code>: <code>type</code>, <code>key</code>, <code>rows</code>, <code>Extra</code>. Con số 5M→380K rows scanned là bằng chứng của anh — biết nó lấy từ đâu.</p>
+        </div>
+      </li>
+      <li class="q" data-id="a6">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">A6</span></div>
+        <div>
+          <p class="q-text">Endpoint CRM tách thành "main record" + "deferred contract" — client giờ phải gọi 2 lần. Vì sao đánh đổi đó chấp nhận được, và anh có cân nhắc GraphQL hay field selection không?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Đây là quyết định thiết kế API, không phải tối ưu DB. Là cơ hội tốt nhất để anh thể hiện tư duy kiến trúc.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="b">
+    <div class="sec-head">
+      <span class="sec-letter mono">B</span>
+      <h2>Chiều sâu Node &amp; NestJS mà 1 năm chưa chắc phủ hết</h2>
+      <span class="sec-count mono">9 câu</span>
+    </div>
+    <p class="sec-note">
+      Đây là những câu tôi từng hỏi anh và anh chưa trả lời. Việc chưa trả lời chính là
+      tín hiệu — nhiều khả năng đây là vùng mỏng thật.
+    </p>
+    <ol class="qs">
+      <li class="q" data-id="b1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B1</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">Anh đã từng debug event loop bị block chưa? Triệu chứng nhìn ra sao, và anh đo bằng công cụ gì?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Câu kinh điển phân biệt "viết được NestJS" với "hiểu Node". Nếu chưa từng gặp, nói thật rồi mô tả anh <em>sẽ</em> làm gì: <code>--prof</code>, clinic.js, hoặc đo event loop lag.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B2</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">Memory leak trong Node biểu hiện thế nào, và anh tìm nó bằng cách nào? Đã từng chụp heap snapshot chưa?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Với người chạy 12 cron job + 3 RabbitMQ consumer, đây là rủi ro có thật trong hệ thống của anh. Họ biết điều đó.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B3</span></div>
+        <div>
+          <p class="q-text">Import CSV 2–3 triệu bản ghi ở Kozocom — nếu làm lại bằng Node thì stream backpressure vào chỗ nào?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Cách hay nhất để nối kinh nghiệm Laravel sẵn có vào kiến thức Node. Nói được <code>pipeline()</code>, <code>highWaterMark</code>, và vì sao đọc hết file vào RAM sẽ chết.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B4</span></div>
+        <div>
+          <p class="q-text">12 cron job của anh sẽ ra sao nếu ERP service scale lên 2 instance?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> <code>@nestjs/schedule</code> chạy trên <em>mọi</em> instance. Job chạy 2 lần là bug production kinh điển. Có distributed lock chưa, hay hệ thống đang chỉ chạy 1 instance? Trả lời "đang 1 instance" là được, miễn anh biết vì sao đó là giới hạn.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b5">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B5</span></div>
+        <div>
+          <p class="q-text">RabbitMQ consumer của anh đặt <code>noAck: false</code>. Chuyện gì xảy ra nếu handler ném exception sau khi đã ghi một phần vào DB?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Requeue vô hạn, poison message, dead-letter queue, và idempotency. Anh đã chọn <code>noAck: false</code> nên họ sẽ cho rằng anh hiểu hệ quả.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b6">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B6</span></div>
+        <div>
+          <p class="q-text">Sự khác nhau giữa provider scope <code>DEFAULT</code>, <code>REQUEST</code> và <code>TRANSIENT</code> trong NestJS? Anh đã dùng <code>REQUEST</code> bao giờ chưa và cái giá của nó là gì?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Kiến thức NestJS nền tảng. <code>REQUEST</code> scope lan lên toàn bộ chuỗi phụ thuộc và giết hiệu năng — đúng chủ đề anh mạnh, nên trả lời được sẽ ghi điểm kép.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b7">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B7</span></div>
+        <div>
+          <p class="q-text"><code>typeorm-transactional</code> hoạt động ra sao? Nếu bên trong một transaction anh publish message lên RabbitMQ rồi transaction rollback thì sao?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> AsyncLocalStorage bên dưới, và bài toán dual-write. Dẫn tới outbox pattern — biết tên nó là đủ ấn tượng ở mức mid.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b8">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B8</span></div>
+        <div>
+          <p class="q-text">Dual datasource: MySQL mặc định + Postgres cho 6 entity Sync. Anh quản lý transaction bắc qua hai database đó thế nào?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Không thể có transaction thật xuyên hai DB. Câu trả lời đúng là mô tả anh chấp nhận eventual consistency và bù trừ ra sao.</p>
+        </div>
+      </li>
+      <li class="q" data-id="b9">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">B9</span></div>
+        <div>
+          <p class="q-text">Graceful shutdown: khi container nhận SIGTERM lúc một batch job đang chạy dở, hiện tại điều gì xảy ra?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> <code>enableShutdownHooks()</code>, <code>OnModuleDestroy</code>, drain connection. Trực tiếp liên quan tới worker container anh tự dựng.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="c">
+    <div class="sec-head">
+      <span class="sec-letter mono">C</span>
+      <h2>Những con số anh tự khai trên CV</h2>
+      <span class="sec-count mono">5 câu</span>
+    </div>
+    <p class="sec-note">
+      Người phỏng vấn cẩn thận sẽ cộng nhẩm các mốc thời gian trong CV. Ba trong số này
+      không cộng ra được. Không sao — nhưng phải có câu trả lời chuẩn bị sẵn.
+    </p>
+    <ol class="qs">
+      <li class="q" data-id="c1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">C1</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">CV ghi Vue.js 3 năm, nhưng chỉ Flydino và Bear Acer có Vue — cộng lại khoảng 22 tháng. Ba năm ở đâu ra?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Đây là mâu thuẫn kiểm chứng được ngay trên chính tờ CV, không cần hỏi ai. Hoặc sửa xuống 2, hoặc có lý do cụ thể (dự án En, Viet cũng dùng Vue 3 + TS trong giai đoạn Flydino).</p>
+        </div>
+      </li>
+      <li class="q" data-id="c2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">C2</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">PostgreSQL 3 năm — Kozocom 13 tháng, Bear Acer 12 tháng và chỉ cho 6 entity Sync. Anh giải thích thế nào nếu bị hỏi?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Anh đã cân nhắc và cố ý chọn con số này. Vậy phải thủ sẵn câu trả lời, vì đây là câu dễ hỏi nhất trong cả CV.</p>
+        </div>
+      </li>
+      <li class="q" data-id="c3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">C3</span></div>
+        <div>
+          <p class="q-text">TypeScript 2 năm nhưng NestJS chỉ 1 năm. Vậy năm TypeScript còn lại là frontend Vue — backend TypeScript của anh thực chất chỉ 1 năm phải không?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Trung thực về điều này lại mạnh hơn né tránh. "Backend TS đúng 1 năm, nhưng là 1 năm sở hữu trọn vẹn một service" là câu trả lời tốt.</p>
+        </div>
+      </li>
+      <li class="q" data-id="c4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">C4</span></div>
+        <div>
+          <p class="q-text">CV nói "senior-level ownership" trong khi NestJS mới 1 năm. Anh định nghĩa senior ở đây là gì?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Cụm này là lời mời họ chất vấn. Neo vào phạm vi trách nhiệm (một mình giữ cả service, tự quyết kiến trúc, tự tìm ra sự cố) chứ đừng neo vào số năm.</p>
+        </div>
+      </li>
+      <li class="q" data-id="c5">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">C5</span></div>
+        <div>
+          <p class="q-text">Vì sao PHP 5 năm mà JavaScript chỉ 2 năm, trong khi anh làm Vue từ 2023?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Nine Plus là jQuery-style ajax nên anh đã cố ý không tính. Đó là quyết định trung thực — nói ra được sẽ cho thấy anh khai số liệu có kỷ luật.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="d">
+    <div class="sec-head">
+      <span class="sec-letter mono">D</span>
+      <h2>Codebase ERP anh đang giữ</h2>
+      <span class="sec-count mono">6 câu</span>
+    </div>
+    <p class="sec-note">
+      Anh nói mình là người duy nhất giữ service này, nên mọi thứ trong đó là trách nhiệm
+      của anh — kể cả phần anh thừa kế. Đây là các điểm một reviewer sẽ thấy ngay.
+    </p>
+    <ol class="qs">
+      <li class="q" data-id="d1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">D1</span></div>
+        <div>
+          <p class="q-text"><code>bull</code> và <code>@nestjs/bull</code> nằm trong package.json nhưng không file nào import. Vì sao còn ở đó?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Dead dependency là bề mặt tấn công và là nhiễu. Câu trả lời tốt: "tôi biết, nằm trong danh sách dọn, chưa ưu tiên vì X."</p>
+        </div>
+      </li>
+      <li class="q" data-id="d2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">D2</span></div>
+        <div>
+          <p class="q-text">Jest, ts-jest và @swc/jest vẫn còn trong devDependencies dù đã chuyển sang Vitest. Vì sao chuyển, và vì sao dọn chưa xong?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Lý do chuyển sang Vitest là câu chuyện kỹ thuật tốt (tốc độ, ESM). Phần dọn dở là bài kiểm tra tính trung thực.</p>
+        </div>
+      </li>
+      <li class="q" data-id="d3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">D3</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">Không có <code>APP_GUARD</code> toàn cục — guard gắn theo từng controller. Điều gì đảm bảo route mới không bị quên bảo vệ?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Đây là lỗ hổng bảo mật thật, không phải chuyện thẩm mỹ. Trên hệ thống ERP có HR và Accounting thì một route quên guard là sự cố dữ liệu.</p>
+        </div>
+      </li>
+      <li class="q" data-id="d4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">D4</span></div>
+        <div>
+          <p class="q-text">README ghi <code>npm run test:e2e</code> nhưng lệnh đó không tồn tại, không có thư mục <code>test/</code>, và supertest cài mà không dùng. 195 spec file kia phủ những gì?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> 195 spec là con số ấn tượng — cho tới khi họ hỏi có bao nhiêu là integration test. Biết tỉ lệ unit / integration của mình.</p>
+        </div>
+      </li>
+      <li class="q" data-id="d5">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">D5</span></div>
+        <div>
+          <p class="q-text"><code>USE_FASTIFY</code> cho phép hoán đổi HTTP adapter. Anh có thật sự chạy cả hai không, và có test nào bắt được code bị dính chặt vào một adapter?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Câu chuyện hay nếu anh giải thích được đánh đổi; câu chuyện dở nếu đó chỉ là flag kế thừa không ai bật. Đừng để họ tự tìm ra vế thứ hai.</p>
+        </div>
+      </li>
+      <li class="q" data-id="d6">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">D6</span></div>
+        <div>
+          <p class="q-text">112 entity, 124 migration, 103 custom repository, 65 file dùng <code>createQueryBuilder</code>, 49 file raw SQL. Nếu được 3 tháng để cải thiện, anh làm gì trước?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Anh gọi cấu trúc này là tệ. Họ sẽ hỏi anh định làm gì với nó. Câu trả lời phải có thứ tự ưu tiên và lý do, không phải "viết lại".</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="e">
+    <div class="sec-head">
+      <span class="sec-letter mono">E</span>
+      <h2>Vận hành &amp; DevOps — khoảng trống anh tự nhận</h2>
+      <span class="sec-count mono">5 câu</span>
+    </div>
+    <ol class="qs">
+      <li class="q" data-id="e1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">E1</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">Ai deploy service NestJS lên production? Anh tự làm hay bàn giao cho người khác?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> "Sole developer" ngụ ý anh tự vận hành. Nếu không phải, làm rõ sớm để không bị hiểu nhầm rồi lộ ra giữa buổi.</p>
+        </div>
+      </li>
+      <li class="q" data-id="e2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">E2</span></div>
+        <div>
+          <p class="q-text">Anh phát hiện sự cố CPU/RAM nhờ tự để ý server chậm. Sau vụ đó anh đã dựng cảnh báo gì để lần sau không phải tự để ý nữa?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Đây là câu hỏi hay nhất họ có thể hỏi anh, vì nó biến một thành tích thành câu chuyện về sự trưởng thành trong vận hành. Chuẩn bị kỹ.</p>
+        </div>
+      </li>
+      <li class="q" data-id="e3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">E3</span></div>
+        <div>
+          <p class="q-text">Winston + daily-rotate ghi log ra file. Khi container bị thay thế thì log đi đâu? Anh tra một request lỗi từ tuần trước bằng cách nào?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Log ra file trong container là anti-pattern quen thuộc. Biết vì sao, và biết tên giải pháp (log ra stdout, gom tập trung), là đủ.</p>
+        </div>
+      </li>
+      <li class="q" data-id="e4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">E4</span></div>
+        <div>
+          <p class="q-text">Health check và readiness probe cho service ERP — có chưa, và nó kiểm tra những gì?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> <code>@nestjs/terminus</code>. Với dual datasource + RabbitMQ, một health check tử tế phải kiểm cả ba.</p>
+        </div>
+      </li>
+      <li class="q" data-id="e5">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">E5</span></div>
+        <div>
+          <p class="q-text">Nhiều JD ở Việt Nam yêu cầu chứng chỉ AWS mà anh chưa có. Anh trả lời thế nào khi bị hỏi thẳng?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Anh tự nhận DevOps là khoảng trống. Có sẵn một câu trả lời ngắn, không phòng thủ, kèm điều anh đang làm để bù (MIA-POS có CI/CD GitHub Actions — dùng nó).</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="f">
+    <div class="sec-head">
+      <span class="sec-letter mono">F</span>
+      <h2>MIA-POS — dự án cá nhân</h2>
+      <span class="sec-count mono">4 câu</span>
+    </div>
+    <p class="sec-note">
+      Đây là tài sản mạnh nhất của anh cho một buổi phỏng vấn kiến trúc, và cũng dễ bị
+      soi nhất vì anh tự chọn mọi thứ trong đó.
+    </p>
+    <ol class="qs">
+      <li class="q" data-id="f1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">F1</span></div>
+        <div>
+          <p class="q-text">Bốn ngôn ngữ (PHP, Go, Python, TypeScript) cho một dự án một người. Biện hộ cho quyết định đó.</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Có thể đọc thành tò mò kỹ thuật, cũng có thể đọc thành thiếu kỷ luật. Phải có lý do theo từng service, đừng nói "muốn học".</p>
+        </div>
+      </li>
+      <li class="q" data-id="f2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">F2</span></div>
+        <div>
+          <p class="q-text">Các service tách theo domain nhưng dùng chung một database. Anh gọi đó là modular monolith có chủ ý — vậy điều gì sẽ buộc anh phải tách database ra?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Anh đã tự gọi tên đánh đổi, rất tốt. Bước tiếp theo là chỉ ra ngưỡng cụ thể khiến đánh đổi đó hết đúng.</p>
+        </div>
+      </li>
+      <li class="q" data-id="f3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">F3</span></div>
+        <div>
+          <p class="q-text">Vì sao Go cho stores/inventory và log worker, mà không phải NestJS — trong khi anh đang ứng tuyển vị trí NestJS?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Câu này có gài. Trả lời sao cho vừa cho thấy anh chọn công cụ theo bài toán, vừa không ngụ ý Node không đủ tốt cho phần đó.</p>
+        </div>
+      </li>
+      <li class="q" data-id="f4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">F4</span></div>
+        <div>
+          <p class="q-text">MIA-POS đang ở giai đoạn testing, chưa production. Nếu bị hỏi "có ai đang dùng thật chưa", anh trả lời sao?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Giữ đúng từ "in testing" như CV đã ghi. Không nâng cấp thành production. Sự nhất quán này chính là thứ họ đang đo.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="g">
+    <div class="sec-head">
+      <span class="sec-letter mono">G</span>
+      <h2>Sự nghiệp &amp; phi kỹ thuật</h2>
+      <span class="sec-count mono">7 câu</span>
+    </div>
+    <ol class="qs">
+      <li class="q" data-id="g1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">G1</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">Vì sao rời Sotatek sau 5 tháng?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Đây là câu chắc chắn được hỏi. Cần một câu trả lời ngắn, không chê công ty cũ, và nhất quán với việc anh giờ đang tìm việc tiếp.</p>
+        </div>
+      </li>
+      <li class="q" data-id="g2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">G2</span></div>
+        <div>
+          <p class="q-text">Vì sao rời Bear Acer khi anh đang sở hữu trọn một service và vừa tạo ra kết quả đo được ở đó?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Khó hơn G1. "Muốn làm Node nhiều hơn" hơi yếu vì anh đang làm NestJS rồi. Cần lý do thật: quy mô, lương, hay muốn có đồng đội thay vì làm một mình.</p>
+        </div>
+      </li>
+      <li class="q" data-id="g3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">G3</span><span class="tag tag-en">Tiếng Anh</span></div>
+        <div>
+          <p class="q-text">Trình tiếng Anh nói và viết của anh tới đâu? Anh có thể dẫn một buổi họp kỹ thuật bằng tiếng Anh không?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Đây là bộ lọc loại nhiều ứng viên Node remote nhất. Anh làm với khách Nhật 5 năm — giao tiếp qua tiếng Anh hay qua BrSE? Câu trả lời khác nhau hoàn toàn.</p>
+        </div>
+      </li>
+      <li class="q" data-id="g4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">G4</span><span class="tag tag-risk">Rủi ro</span></div>
+        <div>
+          <p class="q-text">Anh có GitHub công khai nào không? Portfolio hiện chỉ dẫn tới LinkedIn.</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Với vị trí NestJS mà kinh nghiệm Node mới 1 năm, một repo công khai đọc được sẽ bù rất nhiều. MIA-POS đã có CI/CD — nếu mở được phần nào thì đó là đòn mạnh nhất anh có.</p>
+        </div>
+      </li>
+      <li class="q" data-id="g5">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">G5</span></div>
+        <div>
+          <p class="q-text">Anh làm một mình ở Bear Acer. Lần gần nhất anh bị người khác review code và phải sửa theo là khi nào?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Rủi ro thật của "sole developer": không ai phản biện. Câu chuyện checklist review ở Sotatek là câu trả lời — nhưng đó là 1 năm trước.</p>
+        </div>
+      </li>
+      <li class="q" data-id="g6">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">G6</span></div>
+        <div>
+          <p class="q-text">Anh học công nghệ mới bằng cách nào? Cho một ví dụ cụ thể từ năm nay.</p>
+          <p class="q-why"><b>Đang kiểm tra</b> CV nói "comfortable learning new technologies independently". Họ sẽ đòi bằng chứng. MIA-POS với Go và FastAPI chính là bằng chứng đó.</p>
+        </div>
+      </li>
+      <li class="q" data-id="g7">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">G7</span></div>
+        <div>
+          <p class="q-text">Mức lương mong muốn — con số cụ thể, và anh dựa vào đâu?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Chuẩn bị một con số. Neo vào phạm vi trách nhiệm (sở hữu trọn service, kết quả đo được) chứ đừng neo vào số năm kinh nghiệm, vì số năm NestJS không có lợi cho anh.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="h">
+    <div class="sec-head">
+      <span class="sec-letter mono">H</span>
+      <h2>Câu anh nên hỏi ngược lại</h2>
+      <span class="sec-count mono">5 câu</span>
+    </div>
+    <p class="sec-note">
+      Anh vừa rời một chỗ làm một mình, không ai review. Các câu này vừa cho thấy anh
+      biết mình cần gì, vừa giúp anh sàng lọc công ty.
+    </p>
+    <ol class="qs">
+      <li class="q" data-id="h1">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">H1</span></div>
+        <div>
+          <p class="q-text">Team backend có bao nhiêu người, và quy trình code review đang chạy thế nào?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Trả lời trực tiếp cho G5. Cho thấy anh <em>muốn</em> được phản biện sau một năm làm một mình.</p>
+        </div>
+      </li>
+      <li class="q" data-id="h2">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">H2</span></div>
+        <div>
+          <p class="q-text">Ai chịu trách nhiệm khi production có sự cố? Có on-call không?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Cho thấy anh nghĩ tới vận hành, đúng chỗ anh đang muốn lấp.</p>
+        </div>
+      </li>
+      <li class="q" data-id="h3">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">H3</span></div>
+        <div>
+          <p class="q-text">Codebase NestJS hiện tại bao nhiêu tuổi, và phần nào đang khiến team đau đầu nhất?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Anh chuyên trị codebase kế thừa lộn xộn. Câu này mời họ mô tả đúng bài toán anh giỏi.</p>
+        </div>
+      </li>
+      <li class="q" data-id="h4">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">H4</span></div>
+        <div>
+          <p class="q-text">Giao tiếp với khách Nhật qua BrSE hay trực tiếp bằng tiếng Anh?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Quyết định xem G3 có thành vấn đề hay không. Hỏi sớm.</p>
+        </div>
+      </li>
+      <li class="q" data-id="h5">
+        <label class="q-check"><input type="checkbox" /><span class="box"></span></label>
+        <div class="q-meta"><span class="q-id mono">H5</span></div>
+        <div>
+          <p class="q-text">Trong 6 tháng đầu, các anh kỳ vọng người này làm được gì để coi là tuyển đúng?</p>
+          <p class="q-why"><b>Đang kiểm tra</b> Câu kết mạnh. Buộc họ nói ra kỳ vọng thật, và cho anh biết vai trò này có thật sự cần NestJS hay chỉ cần một người sửa được query chậm.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <p class="foot">
+    Soạn từ CV ngày 30/08/2026 và ghi chú của các phiên trước. Các câu gắn thẻ
+    <span class="tag tag-risk">Rủi ro</span> là chỗ CV tự tạo ra câu hỏi cho người đọc —
+    ưu tiên chúng. Tiến độ tick lưu trong <code>localStorage</code> của chính trình duyệt này,
+    không gửi đi đâu cả.
+  </p>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "ntd-interview-prep";
+  var boxes = Array.prototype.slice.call(document.querySelectorAll(".q input"));
+  var countEl = document.getElementById("count");
+  var fillEl = document.getElementById("fill");
+  var filterBtn = document.getElementById("filter");
+  var resetBtn = document.getElementById("reset");
+
+  // file:// origins and private-mode browsers both throw on storage access, so
+  // every read and write is guarded and the page works fine without it.
+  function load() {
+    try {
+      return JSON.parse(localStorage.getItem(KEY) || "{}") || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function save(state) {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    } catch (e) {
+      /* Progress simply will not survive a reload. */
+    }
+  }
+
+  function render() {
+    var done = 0;
+    boxes.forEach(function (box) {
+      var item = box.closest(".q");
+      if (box.checked) {
+        done++;
+        item.classList.add("done");
+      } else {
+        item.classList.remove("done");
+      }
+    });
+
+    countEl.textContent = done + " / " + boxes.length;
+    fillEl.style.width = boxes.length ? (done / boxes.length) * 100 + "%" : "0%";
+  }
+
+  var state = load();
+
+  boxes.forEach(function (box) {
+    var item = box.closest(".q");
+    var id = item.getAttribute("data-id");
+
+    box.checked = state[id] === true;
+    box.setAttribute("aria-label", "Đã chuẩn bị câu " + id.toUpperCase());
+
+    box.addEventListener("change", function () {
+      state[id] = box.checked;
+      save(state);
+      render();
+    });
+  });
+
+  filterBtn.addEventListener("click", function () {
+    var on = filterBtn.getAttribute("aria-pressed") === "true";
+    filterBtn.setAttribute("aria-pressed", String(!on));
+    document.body.classList.toggle("only-open", !on);
+    filterBtn.textContent = !on ? "Hiện tất cả" : "Chỉ hiện chưa xong";
+  });
+
+  resetBtn.addEventListener("click", function () {
+    if (!window.confirm("Xoá toàn bộ đánh dấu?")) return;
+    state = {};
+    save(state);
+    boxes.forEach(function (box) { box.checked = false; });
+    render();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
