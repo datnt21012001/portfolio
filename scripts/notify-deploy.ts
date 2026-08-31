@@ -13,9 +13,13 @@ import { deployEmbed, type DeployStatus } from '../server/deploy'
 
 const webhook = process.env.DISCORD_DEPLOY_WEBHOOK_URL
 if (!webhook) {
-  // Not configured is a choice, not a failure: the workflow stays usable for
-  // anyone who has not set the secret.
-  console.log('DISCORD_DEPLOY_WEBHOOK_URL is not set; deploy not announced')
+  // Not configured is a choice, not a failure, so this does not fail the run.
+  // It is a workflow annotation rather than a log line because a run that
+  // announces nothing is indistinguishable from a step that never fired, and
+  // guessing which one you are looking at costs more than the warning does.
+  console.log(
+    '::warning title=Deploy not announced::DISCORD_DEPLOY_WEBHOOK_URL is not set, so no Discord notice was sent for this run.',
+  )
   process.exit(0)
 }
 
@@ -34,5 +38,8 @@ await send(
     subject: process.env.COMMIT_SUBJECT ?? '',
     runUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
     deploymentUrl: process.env.DEPLOYMENT_URL || null,
+    // "skipped" means the gate rejected the commit and the upload was never
+    // reached; anything else means the deploy step actually ran.
+    deployAttempted: process.env.DEPLOY_OUTCOME !== 'skipped',
   }),
 )
