@@ -1,5 +1,5 @@
 {
-  "name": "ntd-portfolio",
+  "name": "portfolio-datnt",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -26,6 +26,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "~5.7.0",
     "vite": "^7.0.0",
-    "vue-tsc": "^2.2.0"
+    "vue-tsc": "^2.2.0",
+    "wrangler": "4.127.1"
   }
 }

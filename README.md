@@ -87,12 +87,12 @@ different runtime behaviour with no change to the code.
 Set the secret before the first deploy:
 
 ```bash
-bunx wrangler pages secret put DISCORD_WEBHOOK_URL --project-name=ntd-portfolio
+bunx wrangler pages secret put DISCORD_WEBHOOK_URL --project-name=portfolio-datnt
 ```
 
 `bun run dev` never posts - the composable is inert outside `import.meta.env.PROD`,
 and Vite does not run Pages Functions anyway. To exercise the endpoints, copy
-`.dev.vars.example` to `.dev.vars` and run `bun run dev:cf`.
+`.env.example` to `.env` and run `bun run dev:cf`.
 
 `bun run build` gates on both before it emits anything:
 
@@ -108,7 +108,7 @@ Static output. Cloudflare Pages:
 
 ```bash
 SITE_URL=https://your-domain.example bun run build
-bunx wrangler pages deploy dist --project-name=ntd-portfolio
+bunx wrangler pages deploy dist --project-name=portfolio-datnt
 ```
 
 `SITE_URL` is what injects `<link rel="canonical">`, `og:url`, and the absolute
@@ -116,3 +116,20 @@ bunx wrangler pages deploy dist --project-name=ntd-portfolio
 omitted, which is correct but gives no social card. There is deliberately no
 default domain: a canonical pointing at a host you do not own tells search
 engines the real page lives somewhere else.
+
+That command is the manual path. `.github/workflows/deploy.yml` does the same
+thing on every push to `main`, gated on `bun run build`, so a failing test or a
+type error stops the deploy rather than shipping. Pull requests run the identical
+gate and skip the upload.
+
+Three settings on the GitHub repo, under Settings → Secrets and variables → Actions:
+
+| Name | Kind | Notes |
+| --- | --- | --- |
+| `CLOUDFLARE_API_TOKEN` | secret | Token with the **Cloudflare Pages: Edit** permission |
+| `CLOUDFLARE_ACCOUNT_ID` | secret | The account the Pages project lives in |
+| `SITE_URL` | variable | Origin to build canonical tags from; omit and they are omitted |
+
+`DISCORD_WEBHOOK_URL` is deliberately absent from that list. It is a runtime
+binding the deployed Function reads, not a build input, so it is set once on the
+project with `wrangler pages secret put` and never travels through CI.

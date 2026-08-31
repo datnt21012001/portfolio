@@ -131,10 +131,10 @@ they are the flood surface. Defences, in order:
 `DISCORD_WEBHOOK_URL` is the only secret. Set for production with:
 
 ```
-bunx wrangler pages secret put DISCORD_WEBHOOK_URL --project-name=ntd-portfolio
+bunx wrangler pages secret put DISCORD_WEBHOOK_URL --project-name=portfolio-datnt
 ```
 
-Locally it goes in `.dev.vars`, which is added to `.gitignore`.
+Locally it goes in `.env`, which is added to `.gitignore`.
 
 `vite dev` does not execute Pages Functions, so a `dev:cf` script runs
 `wrangler pages dev` against the built output for end-to-end testing. The client
