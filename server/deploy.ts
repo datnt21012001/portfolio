@@ -20,6 +20,13 @@ export type DeployInfo = {
   runUrl: string
   /** Absent when the gate failed before anything was uploaded. */
   deploymentUrl: string | null
+  /**
+   * Whether the upload was actually reached. A red run means one of two very
+   * different things - the gate rejected the commit, or the gate passed and
+   * Cloudflare refused it - and the person reading the notice at midnight
+   * should not have to open the run log to find out which.
+   */
+  deployAttempted: boolean
 }
 
 /** A commit subject has no length limit; an embed field does. */
@@ -34,10 +41,10 @@ const COLOURS: Record<DeployStatus, number> = {
   cancelled: 0x64748b,
 }
 
-const TITLES: Record<DeployStatus, string> = {
-  success: '✅ Deployed',
-  failure: '❌ Deploy failed',
-  cancelled: '⚪ Deploy cancelled',
+function titleOf(info: DeployInfo): string {
+  if (info.status === 'success') return '✅ Deployed'
+  if (info.status === 'cancelled') return '⚪ Deploy cancelled'
+  return info.deployAttempted ? '❌ Deploy failed' : '❌ Build failed'
 }
 
 /** `main` is the project's production branch; anything else lands as a preview. */
@@ -77,7 +84,7 @@ export function deployEmbed(info: DeployInfo) {
   fields.push({ name: 'Run', value: info.runUrl, inline: false })
 
   return {
-    title: TITLES[info.status],
+    title: titleOf(info),
     color: COLOURS[info.status],
     fields,
     footer: { text: info.repository },

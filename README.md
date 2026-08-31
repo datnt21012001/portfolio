@@ -131,10 +131,16 @@ Four settings on the GitHub repo, under Settings → Secrets and variables → A
 | `SITE_URL` | variable | Origin to build canonical tags from; omit and they are omitted |
 | `DISCORD_DEPLOY_WEBHOOK_URL` | secret | Where the deploy notice goes; omit and the run says so and moves on |
 
-The deploy notice is announced whatever the outcome, because a deploy you are
-not told about failing is worse than no notice at all. `server/deploy.ts` renders
-it and is tested like every other module under `server/`; `scripts/notify-deploy.ts`
-only marshals the workflow environment into it.
+The notice is announced whatever the outcome, because a deploy you are not told
+about failing is worse than no notice at all. It distinguishes the two ways a run
+goes red - `❌ Build failed` when the gate rejected the commit and nothing was
+uploaded, `❌ Deploy failed` when the gate passed and Cloudflare refused it - so
+the notice answers the first question you would have asked. With the secret unset
+the step raises a workflow warning rather than passing in silence, since a run
+that announces nothing looks exactly like a step that never fired.
+`server/deploy.ts` renders it and is tested like every other module under
+`server/`; `scripts/notify-deploy.ts` only marshals the workflow environment
+into it.
 
 That webhook is deliberately a separate secret from the one the site itself
 uses. Point it at the same channel if you want them together, but they are two

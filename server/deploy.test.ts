@@ -10,6 +10,7 @@ const BASE: DeployInfo = {
   subject: 'Pin wrangler and add the deploy workflow',
   runUrl: 'https://github.com/datnt21012001/portfolio/actions/runs/1',
   deploymentUrl: 'https://cd0955f1.portfolio-datnt.pages.dev',
+  deployAttempted: true,
 }
 
 const valueOf = (embed: ReturnType<typeof deployEmbed>, name: string) =>
@@ -35,6 +36,19 @@ describe('deployEmbed', () => {
     expect(deployEmbed({ ...BASE, status: 'failure' }).title).toBe('❌ Deploy failed')
     expect(deployEmbed({ ...BASE, status: 'cancelled' }).color).toBe(0x64748b)
     expect(deployEmbed(BASE).color).not.toBe(deployEmbed({ ...BASE, status: 'failure' }).color)
+  })
+
+  it('separates a gate that rejected the commit from an upload that was refused', () => {
+    const gate = { ...BASE, status: 'failure' as const, deploymentUrl: null, deployAttempted: false }
+    expect(deployEmbed(gate).title).toBe('❌ Build failed')
+    expect(deployEmbed({ ...gate, deployAttempted: true }).title).toBe('❌ Deploy failed')
+  })
+
+  it('does not let deployAttempted change a green or cancelled run', () => {
+    expect(deployEmbed({ ...BASE, deployAttempted: false }).title).toBe('✅ Deployed')
+    expect(deployEmbed({ ...BASE, status: 'cancelled', deployAttempted: false }).title).toBe(
+      '⚪ Deploy cancelled',
+    )
   })
 
   it('omits the deployment field when nothing was uploaded', () => {

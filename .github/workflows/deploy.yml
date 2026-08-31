@@ -66,16 +66,21 @@ jobs:
           echo "url=$url" >> "$GITHUB_OUTPUT"
 
       # always(), so a failed gate is announced too - a deploy you are not told
-      # about failing is worse than no notice at all. The step reads job.status
-      # rather than assuming success, and skips quietly when the secret is
-      # absent. The commit subject is passed as an environment variable and
-      # never interpolated into the script: a subject is attacker-controlled on
-      # any repo that takes contributions.
+      # about failing is worse than no notice at all. job.status carries whether
+      # the run is red; steps.deploy.outcome separates the two ways it can be,
+      # since a gate that rejected the commit never reached the upload at all.
+      #
+      # continue-on-error, because this is a notification and not a gate: a bug
+      # in the announcer must never be what turns a good deploy red. The commit
+      # subject goes through the environment and is never interpolated into the
+      # script - a subject is attacker-controlled on any repo taking contributions.
       - name: Announce on Discord
         if: always() && github.event_name != 'pull_request'
+        continue-on-error: true
         env:
           DISCORD_DEPLOY_WEBHOOK_URL: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
           DEPLOY_STATUS: ${{ job.status }}
+          DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.url }}
         run: |
           export COMMIT_SUBJECT="$(git log -1 --pretty=%s 2>/dev/null || true)"
