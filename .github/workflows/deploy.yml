@@ -59,6 +59,19 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -o pipefail
+
+          # wrangler says "it's necessary to set CLOUDFLARE_API_TOKEN" both when
+          # no secret exists and when one exists but never reached the step, and
+          # those have completely different fixes. Separate them here so the run
+          # names the actual problem instead of restating the symptom.
+          missing=""
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing="$missing CLOUDFLARE_API_TOKEN"
+          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || missing="$missing CLOUDFLARE_ACCOUNT_ID"
+          if [ -n "$missing" ]; then
+            echo "::error title=Cloudflare credentials never reached the runner::Empty at this step:$missing. The workflow reads secrets.*, so check all four: the Actions section (not Codespaces or Dependabot), the Secrets tab (not Variables), this repository, and the exact spelling. A secret stored under an Environment stays invisible unless the job declares environment:."
+            exit 1
+          fi
+
           bunx wrangler pages deploy dist \
             --project-name=portfolio-datnt \
             --branch="$GITHUB_REF_NAME" | tee "$RUNNER_TEMP/deploy.log"

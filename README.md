@@ -126,7 +126,7 @@ Four settings on the GitHub repo, under Settings → Secrets and variables → A
 
 | Name | Kind | Notes |
 | --- | --- | --- |
-| `CLOUDFLARE_API_TOKEN` | secret | Token with the **Cloudflare Pages: Edit** permission |
+| `CLOUDFLARE_API_TOKEN` | secret | Needs **Account -> Cloudflare Pages -> Edit**. The "Edit Cloudflare Workers" template does not include it: Pages is a separate permission, and a token without it authenticates fine and then fails the deploy with `code: 10000` |
 | `CLOUDFLARE_ACCOUNT_ID` | secret | The account the Pages project lives in |
 | `SITE_URL` | variable | Origin to build canonical tags from; omit and they are omitted |
 | `DISCORD_DEPLOY_WEBHOOK_URL` | secret | Where the deploy notice goes; omit and the run says so and moves on |
