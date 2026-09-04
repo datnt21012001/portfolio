@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { clientWork } from '../data/profile'
+import { clientWork, ui } from '../data/content'
 </script>
 
 <template>
@@ -9,10 +9,10 @@ import { clientWork } from '../data/profile'
         v-reveal="0"
         class="max-w-[24ch] text-[1.9rem] leading-tight font-medium tracking-[-0.025em] text-ink sm:text-[2.4rem]"
       >
-        Work shipped under other names
+        {{ ui.workHeading }}
       </h2>
       <p v-reveal="1" class="mt-4 max-w-[58ch] text-[1.0625rem] leading-relaxed text-soft">
-        Most of it sits behind an NDA, so the clients stay unnamed and the systems speak instead.
+        {{ ui.workIntro }}
       </p>
 
       <!-- Breadth without a wall of rows: flick through it. Kept inside the page

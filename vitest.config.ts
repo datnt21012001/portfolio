@@ -1,13 +1,14 @@
 import { defineConfig } from 'vitest/config'
 
 /**
- * The pure modules under server/ only. The Pages runtime and the Discord call
- * are not simulated: what is worth testing here is the parsing and the
- * rendering, and both are ordinary functions.
+ * The pure modules under server/, plus the locale data under src/data. The Pages
+ * runtime and the Discord call are not simulated, and neither is a browser: what
+ * is worth testing is the parsing, the rendering, and that the two translations
+ * stay the same shape. All of it is ordinary functions.
  */
 export default defineConfig({
   test: {
-    include: ['server/**/*.test.ts'],
+    include: ['server/**/*.test.ts', 'src/**/*.test.ts'],
     environment: 'node',
   },
 })

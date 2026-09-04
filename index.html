@@ -13,7 +13,14 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#f4f3f1" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111114" media="(prefers-color-scheme: dark)" />
-    <link rel="preload" as="image" href="/img/portrait-1200.jpg" imagesrcset="/img/portrait-720.jpg 720w, /img/portrait-1200.jpg 1200w" imagesizes="(max-width: 1023px) 100vw, 42vw" />
+    <!-- SVG covers every current browser and scales to any tab density; the PNG
+         is what iOS uses when the page is saved to a home screen. -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- The portrait is the LCP element. type gates the whole hint, so a browser
+         without WebP skips it and falls through to the <picture> JPEG rather than
+         downloading a format it cannot paint. -->
+    <link rel="preload" as="image" type="image/webp" href="/img/portrait-1200.webp" imagesrcset="/img/portrait-720.webp 720w, /img/portrait-1200.webp 1200w" imagesizes="(max-width: 1023px) 100vw, 42vw" />
     <script>
       // Applied before paint so the correct theme renders on first frame (no flash).
       try {

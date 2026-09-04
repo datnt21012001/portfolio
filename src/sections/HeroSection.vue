@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PhArrowUpRight, PhDownloadSimple } from '@phosphor-icons/vue'
-import { person, hero } from '../data/profile'
+import { person, hero, ui } from '../data/content'
 </script>
 
 <template>
@@ -26,7 +26,7 @@ import { person, hero } from '../data/profile'
             href="#contact"
             class="inline-flex h-11 items-center gap-2 rounded-edge bg-accent px-5 text-[14.5px] font-medium whitespace-nowrap text-on-accent transition-opacity duration-200 hover:opacity-90 active:translate-y-px"
           >
-            Get in touch
+            {{ ui.getInTouch }}
             <PhArrowUpRight :size="16" weight="bold" />
           </a>
           <a
@@ -35,24 +35,33 @@ import { person, hero } from '../data/profile'
             class="inline-flex h-11 items-center gap-2 rounded-edge border border-line-strong px-5 text-[14.5px] font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:bg-surface active:translate-y-px"
           >
             <PhDownloadSimple :size="16" weight="bold" />
-            Download CV
+            {{ ui.downloadCv }}
           </a>
         </div>
       </div>
 
       <!-- Portrait. Offset down a step so the composition is not a tidy 50/50. -->
       <div v-reveal="1" class="lg:col-span-5 lg:mt-10">
-        <img
-          src="/img/portrait-1200.jpg"
-          srcset="/img/portrait-720.jpg 720w, /img/portrait-1200.jpg 1200w"
-          sizes="(max-width: 1023px) 100vw, 42vw"
-          width="1200"
-          height="1500"
-          alt="Nguyen Thanh Dat"
-          fetchpriority="high"
-          decoding="async"
-          class="w-full rounded-edge border border-line object-cover"
-        />
+        <!-- WebP first, JPEG behind it. The <picture> is block so the img's
+             w-full still resolves against the column, not a shrink-to-fit box. -->
+        <picture class="block">
+          <source
+            type="image/webp"
+            srcset="/img/portrait-720.webp 720w, /img/portrait-1200.webp 1200w"
+            sizes="(max-width: 1023px) 100vw, 42vw"
+          />
+          <img
+            src="/img/portrait-1200.jpg"
+            srcset="/img/portrait-720.jpg 720w, /img/portrait-1200.jpg 1200w"
+            sizes="(max-width: 1023px) 100vw, 42vw"
+            width="1200"
+            height="1500"
+            :alt="ui.portraitAlt"
+            fetchpriority="high"
+            decoding="async"
+            class="w-full rounded-edge border border-line object-cover"
+          />
+        </picture>
       </div>
     </div>
   </section>

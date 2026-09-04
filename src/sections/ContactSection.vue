@@ -1,12 +1,32 @@
 <script setup lang="ts">
 import { PhArrowUpRight, PhEnvelopeSimple, PhLinkedinLogo, PhPhone } from '@phosphor-icons/vue'
-import { person, contact } from '../data/profile'
+import { computed } from 'vue'
+import { person, contact, ui } from '../data/content'
 
-const links = [
-  { icon: PhEnvelopeSimple, label: person.email, href: `mailto:${person.email}`, external: false },
-  { icon: PhPhone, label: person.phone, href: `tel:${person.phoneHref}`, external: false },
-  { icon: PhLinkedinLogo, label: person.linkedinLabel, href: person.linkedin, external: true },
-]
+// Read through .value here because this is script, not template. The contact
+// details themselves are the same in both languages - they are spread in from
+// the English module - but the list is computed anyway so it cannot go stale if
+// that ever stops being true.
+const links = computed(() => [
+  {
+    icon: PhEnvelopeSimple,
+    label: person.value.email,
+    href: `mailto:${person.value.email}`,
+    external: false,
+  },
+  {
+    icon: PhPhone,
+    label: person.value.phone,
+    href: `tel:${person.value.phoneHref}`,
+    external: false,
+  },
+  {
+    icon: PhLinkedinLogo,
+    label: person.value.linkedinLabel,
+    href: person.value.linkedin,
+    external: true,
+  },
+])
 </script>
 
 <template>
@@ -28,7 +48,7 @@ const links = [
         :href="`mailto:${person.email}`"
         class="mt-9 inline-flex h-11 items-center gap-2 rounded-edge bg-accent px-5 text-[14.5px] font-medium whitespace-nowrap text-on-accent transition-opacity duration-200 hover:opacity-90 active:translate-y-px"
       >
-        Get in touch
+        {{ ui.getInTouch }}
         <PhArrowUpRight :size="16" weight="bold" />
       </a>
 

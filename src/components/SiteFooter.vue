@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { person } from '../data/profile'
+import { person, ui } from '../data/content'
 const year = new Date().getFullYear()
 </script>
 
@@ -10,7 +10,7 @@ const year = new Date().getFullYear()
     >
       <p>{{ person.name }}, {{ person.location }}</p>
       <p>
-        Portrait and product screenshot are mine. Building photograph by Vinayak Sharma on Unsplash.
+        {{ ui.credits }}
         {{ year }}
       </p>
     </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TechIcon from '../components/TechIcon.vue'
-import { stack, alsoUse } from '../data/profile'
+import { stack, alsoUse, ui } from '../data/content'
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import { stack, alsoUse } from '../data/profile'
       v-reveal="0"
       class="max-w-[22ch] text-[1.9rem] leading-tight font-medium tracking-[-0.025em] text-ink sm:text-[2.4rem]"
     >
-      What I reach for
+      {{ ui.stackHeading }}
     </h2>
 
     <div class="mt-11 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -26,7 +26,7 @@ import { stack, alsoUse } from '../data/profile'
 
     <div v-reveal="0" class="mt-12 border-t border-line pt-5">
       <p class="max-w-[74ch] text-[14px] leading-relaxed text-soft">
-        <span class="text-faint">Also in regular use.</span>
+        <span class="text-faint">{{ ui.alsoInUse }}</span>
         {{ alsoUse }}
       </p>
     </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PhArrowUpRight } from '@phosphor-icons/vue'
-import { featured } from '../data/profile'
+import { featured, ui } from '../data/content'
 </script>
 
 <template>
@@ -14,17 +14,24 @@ import { featured } from '../data/profile'
           rel="noopener noreferrer"
           class="group block overflow-hidden rounded-edge border border-line transition-colors duration-300 hover:border-line-strong"
         >
-          <img
-            src="/img/mia-pos-1800.jpg"
-            srcset="/img/mia-pos-1000.jpg 1000w, /img/mia-pos-1800.jpg 1800w"
-            sizes="(max-width: 1023px) 100vw, 58vw"
-            width="1800"
-            height="1013"
-            alt="The MIA-POS store landing page running in production"
-            loading="lazy"
-            decoding="async"
-            class="w-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
-          />
+          <picture class="block">
+            <source
+              type="image/webp"
+              srcset="/img/mia-pos-1000.webp 1000w, /img/mia-pos-1800.webp 1800w"
+              sizes="(max-width: 1023px) 100vw, 58vw"
+            />
+            <img
+              src="/img/mia-pos-1800.jpg"
+              srcset="/img/mia-pos-1000.jpg 1000w, /img/mia-pos-1800.jpg 1800w"
+              sizes="(max-width: 1023px) 100vw, 58vw"
+              width="1800"
+              height="1013"
+              :alt="ui.featuredAlt"
+              loading="lazy"
+              decoding="async"
+              class="w-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
+            />
+          </picture>
         </a>
       </div>
 

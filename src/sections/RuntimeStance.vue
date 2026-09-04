@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { runtimes } from '../data/profile'
+import { runtimes } from '../data/content'
 </script>
 
 <template>
