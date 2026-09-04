@@ -176,10 +176,10 @@ export const clientWork: ClientProject[] = [
     stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher'],
   },
   {
-    name: 'Thương mại điện tử và thanh toán',
+    name: 'Thương mại điện tử, thanh toán và hỏi đáp',
     period: '2022 - 2025',
-    client: 'Khách Nhật và Việt, 3 nền tảng',
-    body: 'Gian hàng nhiều người bán, luồng đơn hàng và giao vận, một nền tảng bán kit xét nghiệm covid, và một nền tảng quản lý doanh nghiệp. Cả ba đều dùng Stripe, với Redis cache phần đọc danh mục.',
+    client: 'Khách Nhật và Việt, 4 nền tảng',
+    body: 'Một nền tảng quản lý doanh nghiệp, một nền tảng bán kit xét nghiệm covid, một nền tảng hỏi đáp, và gian hàng nhiều người bán kèm luồng đơn hàng và giao vận. Ba trong bốn nền tảng dùng Stripe, với Redis cache phần đọc danh mục.',
     stack: ['Laravel', 'MySQL', 'Stripe', 'Redis', 'Docker'],
   },
   {
@@ -221,7 +221,7 @@ export const runtimes: typeof runtimesEn = {
   points: [
     {
       title: 'Laravel là phần sâu, và sâu gần năm năm',
-      body: 'Bảy hệ thống chạy thật từ 2021 - nhân sự, thương mại điện tử và thanh toán, kho vận và tồn kho, đặt chỗ, tuyển dụng, và một nền tảng bệnh viện - trong các đội từ tám đến hai mươi hai người, phần lớn cho khách Nhật. Thiết kế schema, xử lý hàng đợi, kỷ luật review và cách đọc một câu query chậm đều là những thứ tôi học trong PHP trước khi viết dòng TypeScript nào. Đây không phải nửa CV tôi đang rời bỏ; đây là nửa đã dạy tôi phần còn lại.',
+      body: 'Bảy hệ thống chạy thật từ 2021 - nhân sự, thương mại điện tử và thanh toán, kho vận và tồn kho, đặt chỗ, tuyển dụng, và một nền tảng bệnh viện - trong các đội từ tám đến hai mươi người, phần lớn cho khách Nhật. Thiết kế schema, xử lý hàng đợi, kỷ luật review và cách đọc một câu query chậm đều là những thứ tôi học trong PHP trước khi viết dòng TypeScript nào. Đây không phải nửa CV tôi đang rời bỏ; đây là nửa đã dạy tôi phần còn lại.',
     },
     {
       title: 'Tôi đã phụ trách một service NestJS hơn một năm',
