@@ -196,10 +196,10 @@ export const clientWork: ClientProject[] = [
     stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher'],
   },
   {
-    name: 'E-commerce and payments',
+    name: 'E-commerce, payments and Q&A',
     period: '2022 - 2025',
-    client: 'Japanese and Vietnamese clients, 3 platforms',
-    body: 'Multi-seller storefronts, order and shipping workflows, a covid test-kit sales platform, and a company-management platform. Stripe on all three, with Redis caching the catalog reads.',
+    client: 'Japanese and Vietnamese clients, 4 platforms',
+    body: 'A company-management platform, a covid test-kit sales platform, a question-and-answer platform, and multi-seller storefronts with order and shipping workflows. Stripe on three of the four, with Redis caching the catalog reads.',
     stack: ['Laravel', 'MySQL', 'Stripe', 'Redis', 'Docker'],
   },
   {
@@ -287,7 +287,7 @@ export const runtimes = {
   points: [
     {
       title: 'Laravel is the depth, and it is nearly five years deep',
-      body: 'Seven production systems since 2021 - HR, e-commerce and payments, warehouse and inventory, booking, recruitment, and a hospital platform - in teams of eight to twenty-two, mostly for Japanese clients. Schema design, queue work, review discipline and how to read a slow query are all things I learned in PHP before I wrote any TypeScript. It is not the half of my CV I am moving away from; it is the half that taught me the rest.',
+      body: 'Seven production systems since 2021 - HR, e-commerce and payments, warehouse and inventory, booking, recruitment, and a hospital platform - in teams of eight to twenty, mostly for Japanese clients. Schema design, queue work, review discipline and how to read a slow query are all things I learned in PHP before I wrote any TypeScript. It is not the half of my CV I am moving away from; it is the half that taught me the rest.',
     },
     {
       title: 'I have owned a NestJS service for over a year',
