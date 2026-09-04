@@ -111,11 +111,21 @@ SITE_URL=https://your-domain.example bun run build
 bunx wrangler pages deploy dist --project-name=portfolio-datnt
 ```
 
-`SITE_URL` is what injects `<link rel="canonical">`, `og:url`, and the absolute
-`og:image` needed for link previews. Build without it and those tags are simply
-omitted, which is correct but gives no social card. There is deliberately no
-default domain: a canonical pointing at a host you do not own tells search
-engines the real page lives somewhere else.
+`SITE_URL` is what injects `<link rel="canonical">`, `og:url`, the absolute
+`og:image` needed for link previews, the `sitemap.xml`, and the `url`/`image`
+of the JSON-LD. Build without it and all of those are simply omitted, which is
+correct but gives no social card. There is deliberately no default domain: a
+canonical pointing at a host you do not own tells search engines the real page
+lives somewhere else.
+
+`robots.txt` and `sitemap.xml` are emitted by the build rather than kept in
+`public/`, so the sitemap cannot name a stale origin and robots.txt only points
+at a sitemap that exists. `public/404.html` matters more than it looks: without
+a 404 file Cloudflare Pages answers every unmatched path with `index.html` and
+a 200, which makes a typo indistinguishable from the real page and hands
+crawlers unlimited duplicate URLs. The schema.org `Person` block is built from
+`profile.ts` in `vite.config.ts`, so the structured data cannot drift from the
+page it describes.
 
 That command is the manual path. `.github/workflows/deploy.yml` does the same
 thing on every push to `main`, gated on `bun run build`, so a failing test or a

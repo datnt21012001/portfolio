@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { impact } from '../data/profile'
+import { impact, ui } from '../data/content'
 
 /** 7/5 then 5/7. Four items, four cells, no filler tile. */
 const spans = ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7']
@@ -18,10 +18,10 @@ const tones: Record<string, string> = {
         v-reveal="0"
         class="text-[1.9rem] leading-tight font-medium tracking-[-0.025em] text-ink sm:text-[2.4rem]"
       >
-        What I actually changed
+        {{ ui.impactHeading }}
       </h2>
       <p v-reveal="1" class="mt-4 text-[1.0625rem] leading-relaxed text-soft">
-        Four problems from the last year, with the numbers that came out the other side.
+        {{ ui.impactIntro }}
       </p>
     </div>
 

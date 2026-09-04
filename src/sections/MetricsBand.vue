@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { metrics } from '../data/profile'
+import { metrics } from '../data/content'
 </script>
 
 <template>

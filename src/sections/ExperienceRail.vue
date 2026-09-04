@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { experience } from '../data/profile'
+import { experience, ui } from '../data/content'
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import { experience } from '../data/profile'
         v-reveal="0"
         class="max-w-[20ch] text-[1.9rem] leading-tight font-medium tracking-[-0.025em] text-ink sm:text-[2.4rem]"
       >
-        Five years, five teams
+        {{ ui.experienceHeading }}
       </h2>
 
       <div class="mt-12">

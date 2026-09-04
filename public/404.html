@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found - Nguyen Thanh Dat</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#f4f3f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111114" media="(prefers-color-scheme: dark)" />
+    <!--
+      Standalone by necessity: the bundled stylesheet is content-hashed, so this
+      page cannot link to it and stay correct across builds. The tokens below
+      are the same values as :root and .dark in src/styles/main.css.
+
+      The theme is read from prefers-color-scheme rather than the stored choice,
+      because this page carries no script and a wrong-theme flash is worse than
+      ignoring a preference on a page nobody stays on.
+    -->
+    <style>
+      :root {
+        --c-paper: #f4f3f1;
+        --c-ink: #16161a;
+        --c-soft: #55555e;
+        --c-accent: #b8452b;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --c-paper: #111114;
+          --c-ink: #eceae7;
+          --c-soft: #a5a4a0;
+          --c-accent: #e0714b;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background: var(--c-paper);
+        color: var(--c-ink);
+        font-family:
+          'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+          sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
+        max-width: 34rem;
+      }
+      .code {
+        font-size: 0.8125rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--c-accent);
+        margin: 0 0 0.75rem;
+      }
+      h1 {
+        font-size: clamp(1.6rem, 4vw, 2.25rem);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.75rem;
+      }
+      p {
+        color: var(--c-soft);
+        margin: 0 0 1.75rem;
+      }
+      a {
+        display: inline-block;
+        padding: 0.7rem 1.25rem;
+        border-radius: 0.5rem;
+        background: var(--c-accent);
+        color: #fffdfc;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      a:hover {
+        opacity: 0.9;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--c-accent);
+        outline-offset: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="code">404</p>
+      <h1>That page does not exist.</h1>
+      <p>
+        This site is a single page, so there is nothing here to find. The portfolio itself is one
+        click away.
+      </p>
+      <a href="/">Go to the portfolio</a>
+    </main>
+  </body>
+</html>

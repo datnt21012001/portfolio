@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { PhDownloadSimple } from '@phosphor-icons/vue'
 import ThemeToggle from './ThemeToggle.vue'
-import { person, nav } from '../data/profile'
+import LocaleToggle from './LocaleToggle.vue'
+import { person, nav, ui } from '../data/content'
 </script>
 
 <template>
@@ -28,6 +29,7 @@ import { person, nav } from '../data/profile'
       </ul>
 
       <div class="ml-auto flex items-center gap-2 md:ml-0">
+        <LocaleToggle />
         <ThemeToggle />
         <a
           :href="person.cv"
@@ -35,7 +37,7 @@ import { person, nav } from '../data/profile'
           class="inline-flex h-9 items-center gap-1.5 rounded-edge bg-ink px-3.5 text-[13px] font-medium whitespace-nowrap text-paper transition-opacity duration-200 hover:opacity-88 active:translate-y-px"
         >
           <PhDownloadSimple :size="15" weight="bold" />
-          Download CV
+          {{ ui.downloadCv }}
         </a>
       </div>
     </nav>
