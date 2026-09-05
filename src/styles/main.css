@@ -4,9 +4,15 @@
 
 /* ---------------------------------------------------------------------------
    Palette: "Slate + Ember". Cool neutral ground, one warm accent, nothing else.
-   The accent appears only on: primary CTA, measured-result numbers, link rules,
-   and the single ember panel in the impact grid. It never appears anywhere else.
-   Radius is locked to one value (4px) across cards, media, buttons and chips.
+   The accent appears only on: primary CTA, measured-result numbers, period
+   labels, link rules, and the single ember panel in the impact grid. It never
+   appears anywhere else. Radius is locked to one value (4px) across cards,
+   media, buttons and chips.
+
+   Every foreground/background pair here is measured against AA in both themes
+   before it is written down - including the reduced-emphasis text on the ember
+   panel, which is why that panel is a tint carrying normal ink rather than
+   white-at-70%-opacity on a saturated fill.
 --------------------------------------------------------------------------- */
 :root {
   --c-paper: #f4f3f1;
@@ -17,11 +23,11 @@
   --c-line: #dedcd8;
   --c-line-strong: #c7c4be;
   --c-accent: #b8452b;
+  --c-accent-quiet: #fbf0ec;
   --c-on-accent: #fffdfc;
   --c-panel: #16161a;
   --c-on-panel: #edece9;
   --c-on-panel-soft: #9a999f;
-  --shadow-lift: 0 1px 2px rgb(22 22 26 / 0.05), 0 8px 24px -12px rgb(22 22 26 / 0.14);
 }
 
 .dark {
@@ -33,11 +39,11 @@
   --c-line: #2a2a30;
   --c-line-strong: #3c3b43;
   --c-accent: #e0714b;
+  --c-accent-quiet: #241612;
   --c-on-accent: #16100d;
   --c-panel: #1e1e23;
   --c-on-panel: #eceae7;
   --c-on-panel-soft: #a5a4a0;
-  --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,17 +56,17 @@
     --c-line: #2a2a30;
     --c-line-strong: #3c3b43;
     --c-accent: #e0714b;
+    --c-accent-quiet: #241612;
     --c-on-accent: #16100d;
     --c-panel: #1e1e23;
     --c-on-panel: #eceae7;
     --c-on-panel-soft: #a5a4a0;
-    --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
   }
 }
 
 @theme inline {
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
   --color-paper: var(--c-paper);
   --color-surface: var(--c-surface);
@@ -70,6 +76,7 @@
   --color-line: var(--c-line);
   --color-line-strong: var(--c-line-strong);
   --color-accent: var(--c-accent);
+  --color-accent-quiet: var(--c-accent-quiet);
   --color-on-accent: var(--c-on-accent);
   --color-panel: var(--c-panel);
   --color-on-panel: var(--c-on-panel);
@@ -82,6 +89,9 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* The header is sticky at 4rem. Without this every in-page jump lands with
+       the target's first line hidden underneath it. */
+    scroll-padding-top: 6rem;
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -106,7 +116,8 @@
 
 @layer components {
   /* Scroll reveal. Drives hierarchy: content resolves in the order it is read.
-     Applied by the v-reveal directive via IntersectionObserver, never a scroll listener. */
+     Applied by the v-reveal directive via IntersectionObserver, never a scroll
+     listener. */
   .reveal {
     opacity: 0;
     transform: translateY(18px);
@@ -122,15 +133,17 @@
     will-change: auto;
   }
 
-  .rule {
-    border-top: 1px solid var(--c-line);
-  }
-
-  /* Numbers are read, not skimmed: mono, tight, tabular. */
+  /* Numbers are read, not skimmed: mono, tight, tabular. Mono earns its place
+     only where a value is measured or compared - never as a label style. */
   .num {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.03em;
+  }
+
+  .rail {
+    scrollbar-color: var(--c-line-strong) transparent;
+    scrollbar-width: thin;
   }
 }
 

@@ -19,6 +19,18 @@ nowhere else, in either theme. All colours are semantic tokens in
 
 **One radius.** `rounded-edge` (4px) on every card, image, button and chip.
 
+**Type: IBM Plex Sans, with JetBrains Mono for measured values only.** Mono is
+not a label style here. It appears on the metric figures, the before/after pair
+in the impact grid, period ranges and stack tags - places where a value is being
+read or compared, and where tabular figures stop columns shifting. Everything
+that is prose, a name or a control is set in the sans.
+
+**No section furniture.** No index markers, no eyebrow labels, no decorative
+grid overlays or corner marks. Sections are told apart by heading, rule and
+ground colour - the things already doing work. An earlier pass added numbered
+`01 / IMPACT` markers to all eight sections and a gridline overlay; they made
+the page uniform in the way generated layouts are uniform, and are gone.
+
 **The language question is answered on the page, not dodged.** The CV is
 Laravel-heavy and the roles being applied for are Node. `RuntimeStance.vue`
 states that ratio outright and then makes the case that matters: the four
@@ -35,7 +47,15 @@ from competing with the accent, and no image on the page is a mockup.
 page resolves in reading order. It uses IntersectionObserver, never a scroll
 listener, unobserves after firing, and collapses to static under
 `prefers-reduced-motion`. The hidden state is applied by JS at mount, so with
-JS disabled everything renders.
+JS disabled everything renders. The nav's active-section highlight uses a
+second IntersectionObserver (`src/composables/useActiveSection.ts`) for the
+same reason.
+
+**Reduced-emphasis text never buys its greyness with opacity.** The impact
+grid's ember tile used to print its body at `opacity-80` and its context line
+at `opacity-70` over a saturated fill, which measured 3.95:1 and 3.39:1 - both
+below AA. The tile is now a warm tint (`--c-accent-quiet`) carrying
+full-strength ink, so the ember still marks it without the text paying for it.
 
 ## Content
 
@@ -45,9 +65,15 @@ the CV in `public/cv/`.
 
 ## Verified
 
-- WCAG AA contrast on all body text, light and dark (measured, not assumed)
-- No horizontal overflow at 390 / 834 / 1440
-- Keyboard focus ring on all 23 interactive stops (the runtimes section adds none)
+- WCAG AA contrast on every body-text token pair, light and dark - 30 pairs
+  measured out of the shipped stylesheet, not assumed
+- Section nav reachable on every viewport: a slide-down disclosure below 768px,
+  `inert` while collapsed so its links stay out of the tab order
+- In-page jumps clear the sticky header (`scroll-padding-top`)
+- The client-work rail is a labelled focusable region *and* carries paired
+  prev/next buttons, so it is operable without a swipe (WCAG 2.2 dragging)
+- Skip link to `#main` is the first stop in the tab order
+- Technology marks are `aria-hidden`; the visible name is the accessible name
 - Brand marks are imported by name, not by barrel (18 paths, not the catalogue)
 
 ## Visitor notification

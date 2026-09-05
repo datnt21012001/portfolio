@@ -120,10 +120,10 @@ export const experience: Job[] = [
     period: 'Feb 2024 - Mar 2025',
     meta: '16-member team',
     points: [
-      'Warehouse and inventory platform on Laravel and PostgreSQL, inside a Scrum team, with a Redis queue carrying data sync across the platform.',
+      'Warehouse and inventory platform on Laravel and PostgreSQL, inside a Scrum team, with a Redis queue carrying data sync across the platform and PDF export and fax delivery through a third-party API.',
       'Built the legacy-to-new-system migration: CSV imports of roughly 2 to 3 million records per run, written as chunked batch inserts of fifty rows per worker rather than one model create per row. At that volume the difference is not speed, it is whether the job finishes at all before PHP runs out of memory.',
       'Fixed the read paths behind it too: eager-loaded the relations the inventory list had been resolving one row at a time - a textbook N+1 - and moved the list off paginate() so it stopped paying for a COUNT over the whole table on every request.',
-      'Added feature and unit tests to the backend workflow, and reviewed code and supported junior developers.',
+      'Added feature and unit tests to the backend workflow, wrote the module documentation, and reviewed code and supported junior developers.',
     ],
   },
   {
@@ -132,7 +132,7 @@ export const experience: Job[] = [
     period: 'Apr 2023 - Feb 2024',
     meta: 'Multiple client projects',
     points: [
-      'Shipped backend on Laravel and frontend on Vue 3 with TypeScript across three client platforms, designing the database structures for the new features.',
+      'Shipped backend on Laravel across three client platforms, and the frontend on two of them in Vue 3 with TypeScript and Tailwind, designing the database structures for the new features.',
       'Integrated ChatGPT-4 into a skin-analysis flow: an uploaded facial photo comes back as a skin-condition assessment that feeds a product-recommendation step.',
       'Integrated Keycloak SSO, SNS login and S3 or FTP storage on an 18-member recruitment platform.',
     ],
@@ -157,7 +157,7 @@ export const featured = {
   points: [
     'Domain-oriented services behind a Caddy gateway: Laravel for auth, admin, users and payments; Go with Gin for stores and inventory; Python with FastAPI for the AI features.',
     'Postgres with PgBouncer, Redis and RabbitMQ, with a log worker consuming activity events into batched COPY writes.',
-    'Three Vue 3 apps in one Bun workspace, Bun as package manager and bundler, plus CI/CD on GitHub Actions.',
+    'Three Vue 3 apps with Tailwind in one Bun workspace, Bun as package manager and bundler, plus CI/CD on GitHub Actions.',
     'Services still share one database. That is a modular monolith, and it is a deliberate trade-off at this size rather than an accident.',
   ],
   href: 'https://mia-store-remote.pages.dev',
@@ -192,15 +192,8 @@ export const clientWork: ClientProject[] = [
     name: 'Warehouse and inventory platform',
     period: 'Feb 2024 - Mar 2025',
     client: 'Japanese client, 16-member team',
-    body: 'Purchasing, selling and store management, plus the CSV migration that carried the legacy data across.',
-    stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher'],
-  },
-  {
-    name: 'E-commerce, payments and Q&A',
-    period: '2022 - 2025',
-    client: 'Japanese and Vietnamese clients, 4 platforms',
-    body: 'A company-management platform, a covid test-kit sales platform, a question-and-answer platform, and multi-seller storefronts with order and shipping workflows. Stripe on three of the four, with Redis caching the catalog reads.',
-    stack: ['Laravel', 'MySQL', 'Stripe', 'Redis', 'Docker'],
+    body: 'Purchasing, selling and store management, plus the CSV migration that carried the legacy data across, PDF export and fax delivery through a third-party API.',
+    stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher', 'Fax API'],
   },
   {
     name: 'AI skin analysis and booking',
@@ -222,6 +215,13 @@ export const clientWork: ClientProject[] = [
     client: 'Vietnamese client, 8-member team',
     body: 'Distance and fare calculation between pickup and destination, driver booking, ratings and management.',
     stack: ['Laravel', 'Vue 3', 'TypeScript', 'Google Maps API'],
+  },
+  {
+    name: 'E-commerce, payments and Q&A',
+    period: 'Mar 2022 - Jan 2023',
+    client: 'Japanese clients, 3 platforms',
+    body: 'A covid test-kit sales platform - product, order and order-item management, CSV import and export, online payment. A question-and-answer platform - posting and answering, moderation, search and filtering, answer ratings. And multi-seller storefronts - seller registration, orders, store management, payment and shipping. Stripe on two of the three, with Redis caching the catalog reads.',
+    stack: ['Laravel', 'MySQL', 'Stripe', 'Redis', 'Docker'],
   },
 ]
 
@@ -253,6 +253,7 @@ export const stack: StackGroup[] = [
     label: 'Infrastructure',
     items: [
       { name: 'Docker', slug: 'docker' },
+      { name: 'Nginx', slug: 'nginx' },
       { name: 'Linux', slug: 'linux' },
       { name: 'GitHub Actions', slug: 'githubactions' },
       { name: 'Caddy', slug: 'caddy' },
@@ -271,7 +272,7 @@ export const stack: StackGroup[] = [
 
 /** Named in the CV but without a brand mark worth showing as a logo. */
 export const alsoUse =
-  'On the Node side: TypeORM, class-validator, RabbitMQ over @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest, Winston. On the PHP side: Lumen, Laravel Passport, Laravel Telescope, Laravel Reverb. Plus AWS S3, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API.'
+  'On the Node side: TypeORM, class-validator, RabbitMQ over @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest. On the PHP side: Lumen, Eloquent, Laravel Passport, Laravel Telescope, Laravel Reverb. Plus AWS S3, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API, and Cloudflare Pages.'
 
 /**
  * The stack question, answered before a recruiter has to ask it. Two different
@@ -283,11 +284,11 @@ export const alsoUse =
 export const runtimes = {
   headline: 'Two stacks, and the seam between them',
   intro:
-    'PHP and Laravel is the depth: nearly five years and seven production systems. NestJS is what I own now, and every measured result above came out of it. Both are current work, and the boundary where they meet is the part I would most want to be asked about.',
+    'PHP and Laravel is the depth: nearly five years and nine production systems. NestJS is what I own now, and every measured result above came out of it. Both are current work, and the boundary where they meet is the part I would most want to be asked about.',
   points: [
     {
       title: 'Laravel is the depth, and it is nearly five years deep',
-      body: 'Seven production systems since 2021 - HR, e-commerce and payments, warehouse and inventory, booking, recruitment, and a hospital platform - in teams of eight to twenty, mostly for Japanese clients. Schema design, queue work, review discipline and how to read a slow query are all things I learned in PHP before I wrote any TypeScript. It is not the half of my CV I am moving away from; it is the half that taught me the rest.',
+      body: 'Nine production systems since 2021 - HR, three e-commerce, payments and Q&A platforms, driver booking, project management and recruitment, AI skin analysis, warehouse and inventory, and a hospital platform - in teams of seven to twenty, mostly for Japanese clients. Schema design, queue work, review discipline and how to read a slow query are all things I learned in PHP before I wrote any TypeScript. It is not the half of my CV I am moving away from; it is the half that taught me the rest.',
     },
     {
       title: 'I have owned a NestJS service for over a year',
@@ -343,6 +344,11 @@ export const nav = [
  * component where the other language cannot reach it.
  */
 export const ui = {
+  skipToContent: 'Skip to content',
+  openMenu: 'Open menu',
+  closeMenu: 'Close menu',
+  scrollPrev: 'Previous projects',
+  scrollNext: 'More projects',
   downloadCv: 'Download CV',
   getInTouch: 'Get in touch',
   impactHeading: 'What I actually changed',

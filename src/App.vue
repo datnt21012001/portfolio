@@ -18,7 +18,7 @@ useVisitorPing()
 
 <template>
   <SiteNav />
-  <main>
+  <main id="main" tabindex="-1">
     <HeroSection />
     <MetricsBand />
     <ImpactGrid />

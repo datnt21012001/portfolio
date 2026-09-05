@@ -14,6 +14,7 @@ import {
   siLinux,
   siGithubactions,
   siCaddy,
+  siNginx,
   siVuedotjs,
   siTypescript,
   siTailwindcss,
@@ -22,8 +23,8 @@ import {
 } from 'simple-icons'
 
 /**
- * Explicit named imports so the bundler ships eighteen paths, not the whole
- * simple-icons catalogue. Marks render in currentColor: eighteen saturated brand
+ * Explicit named imports so the bundler ships nineteen paths, not the whole
+ * simple-icons catalogue. Marks render in currentColor: nineteen saturated brand
  * colours would be the loudest thing on the page and would say nothing extra.
  */
 const PATHS: Record<string, string> = {
@@ -40,6 +41,7 @@ const PATHS: Record<string, string> = {
   linux: siLinux.path,
   githubactions: siGithubactions.path,
   caddy: siCaddy.path,
+  nginx: siNginx.path,
   vuedotjs: siVuedotjs.path,
   typescript: siTypescript.path,
   tailwindcss: siTailwindcss.path,
@@ -47,18 +49,21 @@ const PATHS: Record<string, string> = {
   bun: siBun.path,
 }
 
-const props = defineProps<{ slug: string; title: string }>()
+const props = defineProps<{ slug: string }>()
 const path = computed(() => PATHS[props.slug] ?? '')
 </script>
 
 <template>
+  <!-- Decorative: every mark sits immediately beside the technology's name in
+       visible text, so announcing it again would just make a screen reader read
+       "PHP PHP". The name is the accessible content; this is the picture of it. -->
   <svg
     v-if="path"
     viewBox="0 0 24 24"
     class="h-4 w-4 shrink-0"
     fill="currentColor"
-    role="img"
-    :aria-label="title"
+    aria-hidden="true"
+    focusable="false"
   >
     <path :d="path" />
   </svg>
