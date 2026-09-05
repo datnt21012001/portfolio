@@ -4,25 +4,25 @@ import { experience, ui } from '../data/content'
 
 <template>
   <section id="experience" class="border-t border-line bg-surface">
-    <div class="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
       <h2
         v-reveal="0"
-        class="max-w-[20ch] text-[1.9rem] leading-tight font-medium tracking-[-0.025em] text-ink sm:text-[2.4rem]"
+        class="mt-6 max-w-[20ch] text-[1.95rem] leading-tight font-medium tracking-[-0.03em] text-ink sm:text-[2.5rem]"
       >
         {{ ui.experienceHeading }}
       </h2>
 
       <div class="mt-12">
         <article
-          v-for="(job, i) in experience"
+          v-for="job in experience"
           :key="job.company"
           v-reveal="0"
           class="grid gap-x-10 gap-y-4 border-t border-line py-9 lg:grid-cols-12 lg:py-11"
         >
           <!-- Meta rail -->
           <div class="lg:col-span-4">
-            <h3 class="text-[1.15rem] font-medium text-ink">{{ job.company }}</h3>
-            <p class="num mt-1.5 text-[13px] text-accent">{{ job.period }}</p>
+            <p class="num text-[13px] text-accent">{{ job.period }}</p>
+            <h3 class="mt-2 text-[1.15rem] font-medium text-ink">{{ job.company }}</h3>
             <p class="mt-1 text-[13px] text-faint">{{ job.meta }}</p>
           </div>
 
@@ -33,7 +33,7 @@ import { experience, ui } from '../data/content'
               <li
                 v-for="point in job.points"
                 :key="point"
-                class="relative max-w-[68ch] pl-6 text-[14.5px] leading-relaxed text-soft before:absolute before:top-[0.72em] before:left-0 before:h-px before:w-3 before:bg-line-strong before:content-['']"
+                class="relative max-w-[68ch] pl-6 text-[14.5px] leading-relaxed text-soft before:absolute before:top-[0.72em] before:left-0 before:h-px before:w-3 before:bg-accent before:content-['']"
               >
                 {{ point }}
               </li>

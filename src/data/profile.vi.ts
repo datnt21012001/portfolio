@@ -111,10 +111,10 @@ export const experience: Job[] = [
     period: 'T2/2024 - T3/2025',
     meta: 'Đội 16 người',
     points: [
-      'Nền tảng kho vận và tồn kho trên Laravel và PostgreSQL, làm trong đội Scrum, với một hàng đợi Redis gánh phần đồng bộ dữ liệu toàn hệ thống.',
+      'Nền tảng kho vận và tồn kho trên Laravel và PostgreSQL, làm trong đội Scrum, với một hàng đợi Redis gánh phần đồng bộ dữ liệu toàn hệ thống, cùng phần xuất PDF và gửi fax qua API bên thứ ba.',
       'Xây phần migration từ hệ cũ sang hệ mới: import CSV khoảng 2 đến 3 triệu bản ghi mỗi lần chạy, viết theo kiểu insert theo lô năm mươi dòng mỗi worker thay vì tạo một model cho từng dòng. Ở khối lượng đó, khác biệt không nằm ở tốc độ mà ở chỗ job có chạy xong nổi trước khi PHP hết bộ nhớ hay không.',
       'Sửa luôn các luồng đọc phía sau: eager load những quan hệ mà màn hình tồn kho vốn đang truy vấn từng dòng một - một ca N+1 kinh điển - và bỏ paginate() khỏi danh sách để nó thôi phải trả giá cho một câu COUNT trên toàn bảng ở mỗi request.',
-      'Bổ sung feature test và unit test vào quy trình backend, đồng thời review code và hỗ trợ các bạn junior.',
+      'Bổ sung feature test và unit test vào quy trình backend, viết tài liệu cho module, đồng thời review code và hỗ trợ các bạn junior.',
     ],
   },
   {
@@ -123,7 +123,7 @@ export const experience: Job[] = [
     period: 'T4/2023 - T2/2024',
     meta: 'Nhiều dự án khách hàng',
     points: [
-      'Làm backend trên Laravel và frontend trên Vue 3 với TypeScript cho ba nền tảng của khách hàng, tự thiết kế cấu trúc dữ liệu cho các tính năng mới.',
+      'Làm backend trên Laravel cho ba nền tảng của khách hàng, và làm frontend Vue 3 với TypeScript và Tailwind cho hai trong số đó, tự thiết kế cấu trúc dữ liệu cho các tính năng mới.',
       'Tích hợp ChatGPT-4 vào luồng phân tích da: ảnh khuôn mặt người dùng tải lên được trả về thành một đánh giá tình trạng da, rồi đưa tiếp vào bước gợi ý sản phẩm.',
       'Tích hợp Keycloak SSO, đăng nhập SNS và lưu trữ S3 hoặc FTP trên một nền tảng tuyển dụng 18 người.',
     ],
@@ -148,7 +148,7 @@ export const featured = {
   points: [
     'Các service chia theo miền nghiệp vụ đứng sau một gateway Caddy: Laravel cho auth, admin, người dùng và thanh toán; Go với Gin cho cửa hàng và tồn kho; Python với FastAPI cho các tính năng AI.',
     'Postgres kèm PgBouncer, Redis và RabbitMQ, cùng một log worker gom sự kiện hoạt động thành các lần ghi COPY theo lô.',
-    'Ba ứng dụng Vue 3 trong một workspace Bun, dùng Bun làm trình quản lý gói và bundler, kèm CI/CD trên GitHub Actions.',
+    'Ba ứng dụng Vue 3 dùng Tailwind trong một workspace Bun, dùng Bun làm trình quản lý gói và bundler, kèm CI/CD trên GitHub Actions.',
     'Các service vẫn dùng chung một database. Đó là modular monolith, và ở quy mô này nó là đánh đổi có chủ ý chứ không phải sự cẩu thả.',
   ],
 }
@@ -172,15 +172,8 @@ export const clientWork: ClientProject[] = [
     name: 'Nền tảng kho vận và tồn kho',
     period: 'T2/2024 - T3/2025',
     client: 'Khách Nhật, đội 16 người',
-    body: 'Mua hàng, bán hàng và quản lý cửa hàng, cộng với phần migration CSV đưa toàn bộ dữ liệu cũ sang hệ mới.',
-    stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher'],
-  },
-  {
-    name: 'Thương mại điện tử, thanh toán và hỏi đáp',
-    period: '2022 - 2025',
-    client: 'Khách Nhật và Việt, 4 nền tảng',
-    body: 'Một nền tảng quản lý doanh nghiệp, một nền tảng bán kit xét nghiệm covid, một nền tảng hỏi đáp, và gian hàng nhiều người bán kèm luồng đơn hàng và giao vận. Ba trong bốn nền tảng dùng Stripe, với Redis cache phần đọc danh mục.',
-    stack: ['Laravel', 'MySQL', 'Stripe', 'Redis', 'Docker'],
+    body: 'Mua hàng, bán hàng và quản lý cửa hàng, cộng với phần migration CSV đưa toàn bộ dữ liệu cũ sang hệ mới, xuất PDF và gửi fax qua API bên thứ ba.',
+    stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher', 'Fax API'],
   },
   {
     name: 'Phân tích da bằng AI và đặt lịch',
@@ -203,6 +196,13 @@ export const clientWork: ClientProject[] = [
     body: 'Tính quãng đường và cước phí giữa điểm đón và điểm đến, đặt tài xế, đánh giá và quản lý.',
     stack: ['Laravel', 'Vue 3', 'TypeScript', 'Google Maps API'],
   },
+  {
+    name: 'Thương mại điện tử, thanh toán và hỏi đáp',
+    period: 'T3/2022 - T1/2023',
+    client: 'Khách Nhật, 3 nền tảng',
+    body: 'Một nền tảng bán kit xét nghiệm covid - quản lý sản phẩm, đơn hàng và dòng hàng, import và export CSV, thanh toán trực tuyến. Một nền tảng hỏi đáp - đặt và trả lời câu hỏi, kiểm duyệt, tìm kiếm và lọc, đánh giá câu trả lời. Và gian hàng nhiều người bán - đăng ký người bán, đơn hàng, quản lý cửa hàng, thanh toán và giao vận. Hai trong ba nền tảng dùng Stripe, với Redis cache phần đọc danh mục.',
+    stack: ['Laravel', 'MySQL', 'Stripe', 'Redis', 'Docker'],
+  },
 ]
 
 /** Only the group label is language; every item name and icon slug is spread in. */
@@ -212,16 +212,16 @@ export const stack: StackGroup[] = stackEn.map((group, i) => ({
 }))
 
 export const alsoUse: string =
-  'Phía Node: TypeORM, class-validator, RabbitMQ qua @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest, Winston. Phía PHP: Lumen, Laravel Passport, Laravel Telescope, Laravel Reverb. Ngoài ra còn AWS S3, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API.'
+  'Phía Node: TypeORM, class-validator, RabbitMQ qua @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest. Phía PHP: Lumen, Eloquent, Laravel Passport, Laravel Telescope, Laravel Reverb. Ngoài ra còn AWS S3, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API và Cloudflare Pages.'
 
 export const runtimes: typeof runtimesEn = {
   headline: 'Hai stack, và đường nối giữa chúng',
   intro:
-    'PHP và Laravel là phần sâu: gần năm năm và bảy hệ thống chạy thật. NestJS là thứ tôi đang phụ trách, và mọi kết quả đo được ở trên đều ra từ đó. Cả hai đều là công việc hiện tại, và chỗ chúng gặp nhau là phần tôi muốn được hỏi nhất.',
+    'PHP và Laravel là phần sâu: gần năm năm và chín hệ thống chạy thật. NestJS là thứ tôi đang phụ trách, và mọi kết quả đo được ở trên đều ra từ đó. Cả hai đều là công việc hiện tại, và chỗ chúng gặp nhau là phần tôi muốn được hỏi nhất.',
   points: [
     {
       title: 'Laravel là phần sâu, và sâu gần năm năm',
-      body: 'Bảy hệ thống chạy thật từ 2021 - nhân sự, thương mại điện tử và thanh toán, kho vận và tồn kho, đặt chỗ, tuyển dụng, và một nền tảng bệnh viện - trong các đội từ tám đến hai mươi người, phần lớn cho khách Nhật. Thiết kế schema, xử lý hàng đợi, kỷ luật review và cách đọc một câu query chậm đều là những thứ tôi học trong PHP trước khi viết dòng TypeScript nào. Đây không phải nửa CV tôi đang rời bỏ; đây là nửa đã dạy tôi phần còn lại.',
+      body: 'Chín hệ thống chạy thật từ 2021 - nhân sự, ba nền tảng thương mại điện tử, thanh toán và hỏi đáp, đặt tài xế, quản lý dự án và tuyển dụng, phân tích da bằng AI, kho vận và tồn kho, và một nền tảng bệnh viện - trong các đội từ bảy đến hai mươi người, phần lớn cho khách Nhật. Thiết kế schema, xử lý hàng đợi, kỷ luật review và cách đọc một câu query chậm đều là những thứ tôi học trong PHP trước khi viết dòng TypeScript nào. Đây không phải nửa CV tôi đang rời bỏ; đây là nửa đã dạy tôi phần còn lại.',
     },
     {
       title: 'Tôi đã phụ trách một service NestJS hơn một năm',
@@ -269,6 +269,11 @@ export const nav = navEn.map((item, i) => ({
 }))
 
 export const ui: typeof uiEn = {
+  skipToContent: 'Tới nội dung chính',
+  openMenu: 'Mở menu',
+  closeMenu: 'Đóng menu',
+  scrollPrev: 'Các dự án trước',
+  scrollNext: 'Thêm dự án',
   downloadCv: 'Tải CV',
   getInTouch: 'Liên hệ',
   impactHeading: 'Những gì tôi thực sự đã thay đổi',

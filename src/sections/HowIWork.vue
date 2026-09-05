@@ -24,15 +24,17 @@ import { howIWork, ui } from '../data/content'
       />
     </picture>
 
-    <div class="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
       <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
         <div class="lg:col-span-4">
-          <h2
-            v-reveal="0"
-            class="text-[1.9rem] leading-tight font-medium tracking-[-0.025em] text-ink sm:text-[2.4rem] lg:sticky lg:top-28"
-          >
-            {{ ui.howIWorkHeading }}
-          </h2>
+          <div class="lg:sticky lg:top-24">
+            <h2
+              v-reveal="0"
+              class="mt-6 text-[1.95rem] leading-tight font-medium tracking-[-0.03em] text-ink sm:text-[2.5rem]"
+            >
+              {{ ui.howIWorkHeading }}
+            </h2>
+          </div>
         </div>
 
         <div class="lg:col-span-8">
@@ -40,7 +42,7 @@ import { howIWork, ui } from '../data/content'
             v-for="(item, i) in howIWork"
             :key="item.title"
             v-reveal="i"
-            class="border-t border-line py-8 first:pt-0 first:border-t-0 lg:py-9"
+            class="border-t border-line py-8 first:border-t-0 first:pt-0 lg:py-9"
           >
             <h3 class="text-[1.15rem] font-medium text-ink">{{ item.title }}</h3>
             <p class="mt-3 max-w-[66ch] text-[15px] leading-relaxed text-soft">{{ item.body }}</p>
