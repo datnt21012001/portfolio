@@ -12,7 +12,7 @@ export const person = {
   phoneHref: '+84975094441',
   linkedin: 'https://www.linkedin.com/in/datntdev210101/',
   linkedinLabel: 'linkedin.com/in/datntdev210101',
-  cv: '/cv/Nguyen-Thanh-Dat-Backend-Engineer.pdf',
+  cv: '/cv/CV_Nguyen_Thanh_Dat_Backend_Engineer.pdf',
 }
 
 export const hero = {
