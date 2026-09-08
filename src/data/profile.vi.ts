@@ -111,7 +111,7 @@ export const experience: Job[] = [
     period: 'T2/2024 - T3/2025',
     meta: 'Đội 16 người',
     points: [
-      'Nền tảng kho vận và tồn kho trên Laravel và PostgreSQL, làm trong đội Scrum, với một hàng đợi Redis gánh phần đồng bộ dữ liệu toàn hệ thống, cùng phần xuất PDF và gửi fax qua API bên thứ ba.',
+      'Nền tảng bán hàng và kho vận trên Laravel và PostgreSQL, làm trong đội Scrum. Nó vừa bán vừa lưu kho: dữ liệu mỗi đơn bán chảy ngược về kho, và chi phí kho được tính từ đó. Một hàng đợi AWS SQS gánh phần đồng bộ dữ liệu theo lô toàn hệ thống, cùng phần xuất PDF và gửi fax qua API bên thứ ba.',
       'Xây phần migration từ hệ cũ sang hệ mới: import CSV khoảng 2 đến 3 triệu bản ghi mỗi lần chạy, viết theo kiểu insert theo lô năm mươi dòng mỗi worker thay vì tạo một model cho từng dòng. Ở khối lượng đó, khác biệt không nằm ở tốc độ mà ở chỗ job có chạy xong nổi trước khi PHP hết bộ nhớ hay không.',
       'Sửa luôn các luồng đọc phía sau: eager load những quan hệ mà màn hình tồn kho vốn đang truy vấn từng dòng một - một ca N+1 kinh điển - và bỏ paginate() khỏi danh sách để nó thôi phải trả giá cho một câu COUNT trên toàn bảng ở mỗi request.',
       'Bổ sung feature test và unit test vào quy trình backend, viết tài liệu cho module, đồng thời review code và hỗ trợ các bạn junior.',
@@ -172,8 +172,8 @@ export const clientWork: ClientProject[] = [
     name: 'Nền tảng kho vận và tồn kho',
     period: 'T2/2024 - T3/2025',
     client: 'Khách Nhật, đội 16 người',
-    body: 'Mua hàng, bán hàng và quản lý cửa hàng, cộng với phần migration CSV đưa toàn bộ dữ liệu cũ sang hệ mới, xuất PDF và gửi fax qua API bên thứ ba.',
-    stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher', 'Fax API'],
+    body: 'Mua hàng, bán hàng và quản lý cửa hàng, với dữ liệu mỗi đơn bán chảy ngược về kho để tính chi phí kho. Cộng với phần migration CSV đưa toàn bộ dữ liệu cũ sang hệ mới, xuất PDF và gửi fax qua API bên thứ ba.',
+    stack: ['Laravel', 'PostgreSQL', 'AWS SQS', 'Pusher', 'Fax API'],
   },
   {
     name: 'Phân tích da bằng AI và đặt lịch',
@@ -212,7 +212,7 @@ export const stack: StackGroup[] = stackEn.map((group, i) => ({
 }))
 
 export const alsoUse: string =
-  'Phía Node: TypeORM, class-validator, RabbitMQ qua @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest. Phía PHP: Lumen, Eloquent, Laravel Passport, Laravel Telescope, Laravel Reverb. Ngoài ra còn AWS S3, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API và Cloudflare Pages.'
+  'Phía Node: TypeORM, class-validator, RabbitMQ qua @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest. Phía PHP: Lumen, Eloquent, Laravel Passport, Laravel Telescope, Laravel Reverb. Ngoài ra còn AWS S3, AWS SQS, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API và Cloudflare Pages.'
 
 export const runtimes: typeof runtimesEn = {
   headline: 'Hai stack, và đường nối giữa chúng',

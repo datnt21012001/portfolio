@@ -120,7 +120,7 @@ export const experience: Job[] = [
     period: 'Feb 2024 - Mar 2025',
     meta: '16-member team',
     points: [
-      'Warehouse and inventory platform on Laravel and PostgreSQL, inside a Scrum team, with a Redis queue carrying data sync across the platform and PDF export and fax delivery through a third-party API.',
+      'Sales and warehouse platform on Laravel and PostgreSQL, inside a Scrum team. It sells as well as stores: each sale feeds back into the warehouse, where the warehouse costs are calculated from it. An AWS SQS queue carried the batched data sync across the platform, with PDF export and fax delivery through a third-party API.',
       'Built the legacy-to-new-system migration: CSV imports of roughly 2 to 3 million records per run, written as chunked batch inserts of fifty rows per worker rather than one model create per row. At that volume the difference is not speed, it is whether the job finishes at all before PHP runs out of memory.',
       'Fixed the read paths behind it too: eager-loaded the relations the inventory list had been resolving one row at a time - a textbook N+1 - and moved the list off paginate() so it stopped paying for a COUNT over the whole table on every request.',
       'Added feature and unit tests to the backend workflow, wrote the module documentation, and reviewed code and supported junior developers.',
@@ -192,8 +192,8 @@ export const clientWork: ClientProject[] = [
     name: 'Warehouse and inventory platform',
     period: 'Feb 2024 - Mar 2025',
     client: 'Japanese client, 16-member team',
-    body: 'Purchasing, selling and store management, plus the CSV migration that carried the legacy data across, PDF export and fax delivery through a third-party API.',
-    stack: ['Laravel', 'PostgreSQL', 'Swagger', 'Pusher', 'Fax API'],
+    body: 'Purchasing, selling and store management, with each sale feeding back into the warehouse, where the warehouse costs are calculated from it. Plus the CSV migration that carried the legacy data across, PDF export and fax delivery through a third-party API.',
+    stack: ['Laravel', 'PostgreSQL', 'AWS SQS', 'Pusher', 'Fax API'],
   },
   {
     name: 'AI skin analysis and booking',
@@ -272,7 +272,7 @@ export const stack: StackGroup[] = [
 
 /** Named in the CV but without a brand mark worth showing as a logo. */
 export const alsoUse =
-  'On the Node side: TypeORM, class-validator, RabbitMQ over @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest. On the PHP side: Lumen, Eloquent, Laravel Passport, Laravel Telescope, Laravel Reverb. Plus AWS S3, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API, and Cloudflare Pages.'
+  'On the Node side: TypeORM, class-validator, RabbitMQ over @nestjs/microservices, @nestjs/schedule, Passport JWT, Vitest. On the PHP side: Lumen, Eloquent, Laravel Passport, Laravel Telescope, Laravel Reverb. Plus AWS S3, AWS SQS, Firebase Cloud Messaging, Stripe, Keycloak, Pusher, Google Maps API, and Cloudflare Pages.'
 
 /**
  * The stack question, answered before a recruiter has to ask it. Two different
