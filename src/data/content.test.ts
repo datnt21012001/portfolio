@@ -40,9 +40,10 @@ const NOT_LANGUAGE = new Set([
  *  that adding to this set is a decision rather than an accident. */
 const SAME_IN_BOTH = new Set([
   'Backend',
-  'Backend Developer',
+  'Senior Backend Developer',
+  'Team Leader (Backend)',
   'Backend Developer, middle level',
-  'Junior Backend Developer',
+  'Junior Full-Stack Developer',
   'Backend Developer, fresher to junior',
 ])
 

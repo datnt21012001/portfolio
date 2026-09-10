@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { impact, ui } from '../data/content'
 
-/** 7/5 then 5/7. Four items, four cells, no filler tile. */
-const spans = ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7']
+/** 7/5, then 5/7, then a full-width fifth. Five items, five cells, no filler
+ *  tile - and spans has to stay as long as `impact`, or the extra tile drops to
+ *  a single grid column and the row breaks. */
+const spans = [
+  'lg:col-span-7',
+  'lg:col-span-5',
+  'lg:col-span-5',
+  'lg:col-span-7',
+  'lg:col-span-12',
+]
 
 /**
  * Three tones, and every text colour in each of them is full-strength.
